@@ -1,0 +1,4 @@
+场景的加载:
+	SceneManager.LoadScene(string sceneName, LoadSceneMode mode) mode:Single,Additive
+	同步的加载,场景会在下一帧才开始加载
+	SceneManager.LoadSceneAsync(string sceneName, LoadSceneMode mode)异步加载

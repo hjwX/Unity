@@ -1,0 +1,19 @@
+Unity:
+	Image和RawImage的区别:
+		Sprite只能用在Image组件上，做2D或者UI
+		Sprite可以做九宫格
+		Sprite一般用在小图，可以打包Atlas
+		Texture基于纹理寻址模式，不能打包成Atlas
+		UI需要修改UV Rect和用到寻址模式用Texture否则使用Sprite
+
+
+C#:
+	Class和Struct的区别:
+		Class是引用类型，Struct是值类型
+		Class实例出来的对象分配在堆上，Struct实例出来的对象分配在栈上
+		值类型传给一个方法时，就要复制它所有的数据
+		而引用类型只需要传一个指针就好了
+	
+	协程:
+		协程是一种可以暂停执行过程的函数，它可以中断当前的执行过程等到下一个Yield条件满足继续执行。是一种"伪多线程"
+		

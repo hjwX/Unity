@@ -1,0 +1,42 @@
+各种地址:
+    Application.dataPath: ../Assets(相当有游戏的根目录)
+    Application.streamAssetsPath: ../Assets/StreamingAssets(ab包放置的位置)
+        在pc上我们可以直接到Application.streamAssetsPath下加载资源
+        但是在android和ios可以调用UnityWebRequest来加载
+        
+    Application.persistentDataPath: C:Users/Administrator/AppData/LocalLow/DefaultCompany/ResourcesLoadTT(项目名) 这个是PC上的地址
+
+
+
+Resources:
+    是unity最早提出的动态加载资源的方案,当你需要动态加载某些资源的时候,只要把他们放在Resources目录下,然后使用Resources.Load()就可以实现动态的加载
+    缺点:在Resources目录下的资源都会被打包进游戏包,会导致游戏包体过大
+        且无法实现热更新
+
+        
+        
+AssetsBundle:
+    AssetsBundle主要的用途就是允许工程动态加载里面的资源
+    和Resources的不同之处:
+        AssetsBundle是和应用程序分开存储的
+        允许用户下载新的AssetsBundle并使用里面的资源
+        需要在编辑模式下,自己写脚本构建AssetsBundle
+    依赖:
+        如果一个AssetsBundle里的一个资源依赖了一个没有打AssetsBundle的资源,Unity会将其拷贝进AssetsBundle里面去
+        如果另一个也依赖了它，它就会被多次拷贝,ad的大小成倍的增长，但是只要把它也打成AssetsBundle依赖它的AssetsBundle只会有一个它的引用
+        
+AssetImporter:
+    AssetImporter name = AssetImporter.GetPath(path);获取到资源导入类，path是在Assets目录下的资源地址
+    可以获取到资源的地址，和资源的assetBundleName，和assetBundleVariant(后缀)
+    -----------------------可以用来在打AB时用代码来设置资源的AssetBundleName不用再手动的去设置AssetBundleName了-------------------------------------------------
+
+AssetsBundle:加载的方法
+	UnityWebRequest www = UnityWebRequest.Get(@"http://localhost/cube.ab");
+	yield return www.SendWebRequest();
+	byte[] bytes = www.downloadhandler.data;
+	AssetBundle ab = AssetBundle.loadFromMemory(bytes);
+	Object cubePrefab = ab.loadAsset<GameObject>("cube");
+	GameObject cube = Instantiate(cuebPrefab) as GameObject;
+
+    
+    
