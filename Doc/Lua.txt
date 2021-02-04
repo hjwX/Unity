@@ -1,1 +1,1 @@
-string.sub(string, i, j)：获取到string下标i到j的子序列 包括i ,j下标
+string.sub(string, i, j)锛氳幏鍙栧埌string涓嬫爣i鍒癹鐨勫瓙搴忓垪 鍖呮嫭i ,j涓嬫爣

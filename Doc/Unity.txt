@@ -1,4 +1,4 @@
-Ё║╬╟╣д╪сть:
+Е°╨Ф≥╞Г └Е┼═Х╫╫:
 	SceneManager.LoadScene(string sceneName, LoadSceneMode mode) mode:Single,Additive
-	м╛╡╫╣д╪сть,Ё║╬╟╩Атзобр╩ж║╡е©╙й╪╪сть
-	SceneManager.LoadSceneAsync(string sceneName, LoadSceneMode mode)рЛ╡╫╪сть
+	Е░▄Ф╜╔Г └Е┼═Х╫╫,Е°╨Ф≥╞Д╪ Е°╗Д╦▀Д╦─Е╦╖Ф┴█Е╪─Е╖▀Е┼═Х╫╫
+	SceneManager.LoadSceneAsync(string sceneName, LoadSceneMode mode)Е╪┌Ф╜╔Е┼═Х╫╫

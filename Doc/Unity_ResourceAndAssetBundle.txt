@@ -1,36 +1,32 @@
-¸÷ÖÖµØÖ·:
-    Application.dataPath: ../Assets(Ïàµ±ÓĞÓÎÏ·µÄ¸ùÄ¿Â¼)
-    Application.streamAssetsPath: ../Assets/StreamingAssets(ab°ü·ÅÖÃµÄÎ»ÖÃ)
-        ÔÚpcÉÏÎÒÃÇ¿ÉÒÔÖ±½Óµ½Application.streamAssetsPathÏÂ¼ÓÔØ×ÊÔ´
-        µ«ÊÇÔÚandroidºÍios¿ÉÒÔµ÷ÓÃUnityWebRequestÀ´¼ÓÔØ
+å„ç§åœ°å€:
+    Application.dataPath: ../Assets(ç›¸å½“æœ‰æ¸¸æˆçš„æ ¹ç›®å½•)
+    Application.streamAssetsPath: ../Assets/StreamingAssets(abåŒ…æ”¾ç½®çš„ä½ç½®)
+        åœ¨pcä¸Šæˆ‘ä»¬å¯ä»¥ç›´æ¥åˆ°Application.streamAssetsPathä¸‹åŠ è½½èµ„æº
+        ä½†æ˜¯åœ¨androidå’Œioså¯ä»¥è°ƒç”¨UnityWebRequestæ¥åŠ è½½
         
-    Application.persistentDataPath: C:Users/Administrator/AppData/LocalLow/DefaultCompany/ResourcesLoadTT(ÏîÄ¿Ãû) Õâ¸öÊÇPCÉÏµÄµØÖ·
-
-
+    Application.persistentDataPath: C:Users/Administrator/AppData/LocalLow/DefaultCompany/ResourcesLoadTT(é¡¹ç›®å) è¿™ä¸ªæ˜¯PCä¸Šçš„åœ°å€
 
 Resources:
-    ÊÇunity×îÔçÌá³öµÄ¶¯Ì¬¼ÓÔØ×ÊÔ´µÄ·½°¸,µ±ÄãĞèÒª¶¯Ì¬¼ÓÔØÄ³Ğ©×ÊÔ´µÄÊ±ºò,Ö»Òª°ÑËûÃÇ·ÅÔÚResourcesÄ¿Â¼ÏÂ,È»ºóÊ¹ÓÃResources.Load()¾Í¿ÉÒÔÊµÏÖ¶¯Ì¬µÄ¼ÓÔØ
-    È±µã:ÔÚResourcesÄ¿Â¼ÏÂµÄ×ÊÔ´¶¼»á±»´ò°ü½øÓÎÏ·°ü,»áµ¼ÖÂÓÎÏ·°üÌå¹ı´ó
-        ÇÒÎŞ·¨ÊµÏÖÈÈ¸üĞÂ
+    æ˜¯unityæœ€æ—©æå‡ºçš„åŠ¨æ€åŠ è½½èµ„æºçš„æ–¹æ¡ˆ,å½“ä½ éœ€è¦åŠ¨æ€åŠ è½½æŸäº›èµ„æºçš„æ—¶å€™,åªè¦æŠŠä»–ä»¬æ”¾åœ¨Resourcesç›®å½•ä¸‹,ç„¶åä½¿ç”¨Resources.Load()å°±å¯ä»¥å®ç°åŠ¨æ€çš„åŠ è½½
+    ç¼ºç‚¹:åœ¨Resourcesç›®å½•ä¸‹çš„èµ„æºéƒ½ä¼šè¢«æ‰“åŒ…è¿›æ¸¸æˆåŒ…,ä¼šå¯¼è‡´æ¸¸æˆåŒ…ä½“è¿‡å¤§
+        ä¸”æ— æ³•å®ç°çƒ­æ›´æ–°
 
-        
-        
 AssetsBundle:
-    AssetsBundleÖ÷ÒªµÄÓÃÍ¾¾ÍÊÇÔÊĞí¹¤³Ì¶¯Ì¬¼ÓÔØÀïÃæµÄ×ÊÔ´
-    ºÍResourcesµÄ²»Í¬Ö®´¦:
-        AssetsBundleÊÇºÍÓ¦ÓÃ³ÌĞò·Ö¿ª´æ´¢µÄ
-        ÔÊĞíÓÃ»§ÏÂÔØĞÂµÄAssetsBundle²¢Ê¹ÓÃÀïÃæµÄ×ÊÔ´
-        ĞèÒªÔÚ±à¼­Ä£Ê½ÏÂ,×Ô¼ºĞ´½Å±¾¹¹½¨AssetsBundle
-    ÒÀÀµ:
-        Èç¹ûÒ»¸öAssetsBundleÀïµÄÒ»¸ö×ÊÔ´ÒÀÀµÁËÒ»¸öÃ»ÓĞ´òAssetsBundleµÄ×ÊÔ´,Unity»á½«Æä¿½±´½øAssetsBundleÀïÃæÈ¥
-        Èç¹ûÁíÒ»¸öÒ²ÒÀÀµÁËËü£¬Ëü¾Í»á±»¶à´Î¿½±´,adµÄ´óĞ¡³É±¶µÄÔö³¤£¬µ«ÊÇÖ»Òª°ÑËüÒ²´ò³ÉAssetsBundleÒÀÀµËüµÄAssetsBundleÖ»»áÓĞÒ»¸öËüµÄÒıÓÃ
+    AssetsBundleä¸»è¦çš„ç”¨é€”å°±æ˜¯å…è®¸å·¥ç¨‹åŠ¨æ€åŠ è½½é‡Œé¢çš„èµ„æº
+    å’ŒResourcesçš„ä¸åŒä¹‹å¤„:
+        AssetsBundleæ˜¯å’Œåº”ç”¨ç¨‹åºåˆ†å¼€å­˜å‚¨çš„
+        å…è®¸ç”¨æˆ·ä¸‹è½½æ–°çš„AssetsBundleå¹¶ä½¿ç”¨é‡Œé¢çš„èµ„æº
+        éœ€è¦åœ¨ç¼–è¾‘æ¨¡å¼ä¸‹,è‡ªå·±å†™è„šæœ¬æ„å»ºAssetsBundle
+    ä¾èµ–:
+        å¦‚æœä¸€ä¸ªAssetsBundleé‡Œçš„ä¸€ä¸ªèµ„æºä¾èµ–äº†ä¸€ä¸ªæ²¡æœ‰æ‰“AssetsBundleçš„èµ„æº,Unityä¼šå°†å…¶æ‹·è´è¿›AssetsBundleé‡Œé¢å»
+        å¦‚æœå¦ä¸€ä¸ªä¹Ÿä¾èµ–äº†å®ƒï¼Œå®ƒå°±ä¼šè¢«å¤šæ¬¡æ‹·è´,adçš„å¤§å°æˆå€çš„å¢é•¿ï¼Œä½†æ˜¯åªè¦æŠŠå®ƒä¹Ÿæ‰“æˆAssetsBundleä¾èµ–å®ƒçš„AssetsBundleåªä¼šæœ‰ä¸€ä¸ªå®ƒçš„å¼•ç”¨
         
 AssetImporter:
-    AssetImporter name = AssetImporter.GetPath(path);»ñÈ¡µ½×ÊÔ´µ¼ÈëÀà£¬pathÊÇÔÚAssetsÄ¿Â¼ÏÂµÄ×ÊÔ´µØÖ·
-    ¿ÉÒÔ»ñÈ¡µ½×ÊÔ´µÄµØÖ·£¬ºÍ×ÊÔ´µÄassetBundleName£¬ºÍassetBundleVariant(ºó×º)
-    -----------------------¿ÉÒÔÓÃÀ´ÔÚ´òABÊ±ÓÃ´úÂëÀ´ÉèÖÃ×ÊÔ´µÄAssetBundleName²»ÓÃÔÙÊÖ¶¯µÄÈ¥ÉèÖÃAssetBundleNameÁË-------------------------------------------------
+    AssetImporter name = AssetImporter.GetPath(path);è·å–åˆ°èµ„æºå¯¼å…¥ç±»ï¼Œpathæ˜¯åœ¨Assetsç›®å½•ä¸‹çš„èµ„æºåœ°å€
+    å¯ä»¥è·å–åˆ°èµ„æºçš„åœ°å€ï¼Œå’Œèµ„æºçš„assetBundleNameï¼Œå’ŒassetBundleVariant(åç¼€)
+    -----------------------å¯ä»¥ç”¨æ¥åœ¨æ‰“ABæ—¶ç”¨ä»£ç æ¥è®¾ç½®èµ„æºçš„AssetBundleNameä¸ç”¨å†æ‰‹åŠ¨çš„å»è®¾ç½®AssetBundleNameäº†-------------------------------------------------
 
-AssetsBundle:¼ÓÔØµÄ·½·¨
+AssetsBundle:åŠ è½½çš„æ–¹æ³•
 	UnityWebRequest www = UnityWebRequest.Get(@"http://localhost/cube.ab");
 	yield return www.SendWebRequest();
 	byte[] bytes = www.downloadhandler.data;

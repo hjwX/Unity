@@ -1,77 +1,77 @@
-Column:Ò»ÁĞ
-Row:Ò»ĞĞ
-Layout:²¼¾Ö
+Column:ä¸€åˆ—
+Row:ä¸€è¡Œ
+Layout:å¸ƒå±€
 
-UIBehaviour:ËùÓĞUIµÄ»ùÀà
+UIBehaviour:æ‰€æœ‰UIçš„åŸºç±»
 
-BaseInputModule:³éÏóÀà
+BaseInputModule:æŠ½è±¡ç±»
 
-PointerInputModule:³éÏóÀà, ¼Ì³ĞÁËBaseInputModule
+PointerInputModule:æŠ½è±¡ç±», ç»§æ‰¿äº†BaseInputModule
 
-StandaloneInputModule:¼Ì³ĞÓÚPointerInputModule ÃæÏòPC,Mac&Linux
+StandaloneInputModule:ç»§æ‰¿äºPointerInputModule é¢å‘PC,Mac&Linux
 
-TouchInputModule:¼Ì³ĞÓÚPointerInputModule ÃæÏòandroid&ios
+TouchInputModule:ç»§æ‰¿äºPointerInputModule é¢å‘android&ios
 
-IEventSystemHandler:ÊÂ¼şµÄ½Ó¿ÚÀà,ÏÂÃæµÄ½Ó¿Ú¾ù¼Ì³ĞÁËËü
-	IPointerEnterHandler:Êó±êÒÆ¶¯½øÈëµ½ÁËUIµÄ·¶Î§ÄÚ(½øÈëµÄË²¼äÊÂ¼ş)
-	IPointerExitHandler:Êó±êÒÆ³öÁËUIµÄ·¶Î§(Ë²·¢ÊÂ¼ş)
-	IPointClickHandler:Êó±êÔÚUIµÄ·¶Î§ÄÚµã»÷ÁË, ²»·Öµã»÷µÄ°´¼üÀàĞÍ, Ö»ÒªÊÇµã»÷ÁË¶¼»á´¥·¢ÊÂ¼ş
+IEventSystemHandler:äº‹ä»¶çš„æ¥å£ç±»,ä¸‹é¢çš„æ¥å£å‡ç»§æ‰¿äº†å®ƒ
+	IPointerEnterHandler:é¼ æ ‡ç§»åŠ¨è¿›å…¥åˆ°äº†UIçš„èŒƒå›´å†…(è¿›å…¥çš„ç¬é—´äº‹ä»¶)
+	IPointerExitHandler:é¼ æ ‡ç§»å‡ºäº†UIçš„èŒƒå›´(ç¬å‘äº‹ä»¶)
+	IPointClickHandler:é¼ æ ‡åœ¨UIçš„èŒƒå›´å†…ç‚¹å‡»äº†, ä¸åˆ†ç‚¹å‡»çš„æŒ‰é”®ç±»å‹, åªè¦æ˜¯ç‚¹å‡»äº†éƒ½ä¼šè§¦å‘äº‹ä»¶
 
 EventSystems:
-	EventSystem.current.currentSelectedGameObject¼ì²â²»µ½Text,Image,RawImageµÄµã»÷ÊÂ¼ş,ÆäËûµÄUI¿ÉÒÔ¼ì²âµ½(ÓÃÖ®Ç°×îºÃ²âÊÔÒ»ÏÂ)
-	ps:¼ì²â²»µ½µÄUI×é¼şÓ¦¸ÃÊÇÃ»ÓĞ¼Ì³ĞSelectableµÄUI×é¼ş(ÏêÏ¸¼û Selectable)
+	EventSystem.current.currentSelectedGameObjectæ£€æµ‹ä¸åˆ°Text,Image,RawImageçš„ç‚¹å‡»äº‹ä»¶,å…¶ä»–çš„UIå¯ä»¥æ£€æµ‹åˆ°(ç”¨ä¹‹å‰æœ€å¥½æµ‹è¯•ä¸€ä¸‹)
+	ps:æ£€æµ‹ä¸åˆ°çš„UIç»„ä»¶åº”è¯¥æ˜¯æ²¡æœ‰ç»§æ‰¿Selectableçš„UIç»„ä»¶(è¯¦ç»†è§ Selectable)
 	
-Selectable:¿É´¥·¢ÊÂ¼şUI×é¼şµÄÒ»¸ö»ùÀà(Button, ToggleµÈ¶¼¼Ì³ĞÁËSelectable)
+Selectable:å¯è§¦å‘äº‹ä»¶UIç»„ä»¶çš„ä¸€ä¸ªåŸºç±»(Button, Toggleç­‰éƒ½ç»§æ‰¿äº†Selectable)
 
 
-RectTransform£º
-	anchoredPosition:±íÊ¾µÄÊÇ×ÓÎïÌåµÄpivotÏà¶ÔÓÚanchorµÄ×ø±ê,µ±anchor²»ÊÇÒ»¸öµãµÄÊ±ºò±íÊ¾µÄÊÇÇ°Èı¸öÔªËØ(left, top, z)
-					ps:localPosition±íÊ¾µÄÊÇ×ÓÎïÌåpivotÏà¶ÔÓÚ¸¸ÎïÌåµÄpivotµÄ×ø±ê
-					µ±×ÓÎïÌåµÄanchorÓÚ¸¸ÎïÌåµÄpivotÖØºÏÊ±anchoredPositionÓÚlocalPositionÏàµÈ
+RectTransformï¼š
+	anchoredPosition:è¡¨ç¤ºçš„æ˜¯å­ç‰©ä½“çš„pivotç›¸å¯¹äºanchorçš„åæ ‡,å½“anchorä¸æ˜¯ä¸€ä¸ªç‚¹çš„æ—¶å€™è¡¨ç¤ºçš„æ˜¯å‰ä¸‰ä¸ªå…ƒç´ (left, top, z)
+					ps:localPositionè¡¨ç¤ºçš„æ˜¯å­ç‰©ä½“pivotç›¸å¯¹äºçˆ¶ç‰©ä½“çš„pivotçš„åæ ‡
+					å½“å­ç‰©ä½“çš„anchoräºçˆ¶ç‰©ä½“çš„pivoté‡åˆæ—¶anchoredPositionäºlocalPositionç›¸ç­‰
 
 
-ToggleGroup£º
-	ToggleGroup.ActiveToggles() »ñÈ¡µ½ÔÚtoggleGroupÏÂµÄ´¦ÓÚactive×´Ì¬ÏÂµÄtoggle,active=falseµÄtoggleÅÅ³ıÔÚÍâ
-	(»ñÈ¡µ½µÄtoggleµÄisOn¶¼ÊÇtrue) ËùÒÔÏëÒª»ñÈ¡µ±Ç°isOnµÄtoggle¿ÉÒÔÖ±½ÓÓÃÕâ¸ö·½·¨»ñÈ¡£¬»ñÈ¡µ½µÄµü´úÆ÷Ó¦¸ÃÖ»ÓĞÒ»¸öÔªËØ(Èç¹û³õÊ¼»¯µÄÊ±ºòÓĞ¼¸¸öisOnÎªtrueµÄ£¬»á»ñÈ¡µ½¶à¸ö)
+ToggleGroupï¼š
+	ToggleGroup.ActiveToggles() è·å–åˆ°åœ¨toggleGroupä¸‹çš„å¤„äºactiveçŠ¶æ€ä¸‹çš„toggle,active=falseçš„toggleæ’é™¤åœ¨å¤–
+	(è·å–åˆ°çš„toggleçš„isOnéƒ½æ˜¯true) æ‰€ä»¥æƒ³è¦è·å–å½“å‰isOnçš„toggleå¯ä»¥ç›´æ¥ç”¨è¿™ä¸ªæ–¹æ³•è·å–ï¼Œè·å–åˆ°çš„è¿­ä»£å™¨åº”è¯¥åªæœ‰ä¸€ä¸ªå…ƒç´ (å¦‚æœåˆå§‹åŒ–çš„æ—¶å€™æœ‰å‡ ä¸ªisOnä¸ºtrueçš„ï¼Œä¼šè·å–åˆ°å¤šä¸ª)
 
 
-Slider£º
-	´´½¨sliderÖ®ºóÏÂÃæÓĞÈı¸ö×ÓÎïÌå
-	Background:¾ÍÖ»ÊÇÒ»¸ö±³¾°Í¼£¬ÆäÊµ¾ÍÊÇÔÚÃ»ÓĞÌî³äÇé¿öÏÂ£¬ÏÔÊ¾µÄimage
-	FillArea:ÏÂÃæ»¹ÓĞ¸öFill(Image)ÆäÖĞµÄimageTypeÊÇSliced£¬×÷ÓÃÊÇÔÚvalue±ä»¯Ê±Ëævalue±ä»¯À´Ìî³äslider
-	HandleSliderArea:ËüµÄµÄ×ÓÎïÌåhandle(Image)ÏÔÊ¾µÄÊÇ»¬¶¯¿é
+Sliderï¼š
+	åˆ›å»ºsliderä¹‹åä¸‹é¢æœ‰ä¸‰ä¸ªå­ç‰©ä½“
+	Background:å°±åªæ˜¯ä¸€ä¸ªèƒŒæ™¯å›¾ï¼Œå…¶å®å°±æ˜¯åœ¨æ²¡æœ‰å¡«å……æƒ…å†µä¸‹ï¼Œæ˜¾ç¤ºçš„image
+	FillArea:ä¸‹é¢è¿˜æœ‰ä¸ªFill(Image)å…¶ä¸­çš„imageTypeæ˜¯Slicedï¼Œä½œç”¨æ˜¯åœ¨valueå˜åŒ–æ—¶éšvalueå˜åŒ–æ¥å¡«å……slider
+	HandleSliderArea:å®ƒçš„çš„å­ç‰©ä½“handle(Image)æ˜¾ç¤ºçš„æ˜¯æ»‘åŠ¨å—
 	onValueChanged.AddListener((value) => {});
 
-Layout Element:UI²¼¾ÖÔªËØ
-		LayoutElement¾ßÓĞ¹ãÒåºÍÏÁÒåµÄÇø±ğ
-			¹ãÒå:LayoutElementÖ¸Ò»ÇĞ¸½¼ÓÁËRectTransformºÍÈÎÒâÊıÁ¿UI×é¼şµÄGameObject
-			ÏÁÒå:LayoutElementÖ¸Ò»¸ö¿ÉÑ¡µÄUI×é¼ş
-			Í¨¹ı¸½¼ÓLayoutElement×é¼şµÄÓÅÏÈ¼¶¸ßÓÚUI×é¼ş×Ô´øµÄLayoutElementµÄÓÅÏÈ¼¶,Ò»¸ögameObject¿ÉÒÔ¸½¼Ó¶à¸öLayoutElement×é¼ş,×é¼şÖ®¼äµÄÓÅÏÈ¼¶ÓÉLayout PriorityÀ´¾ö¶¨
-		µ¥¶ÀµÄLayoutElement×é¼ş(°üÀ¨UI×é¼ş×Ô´øµÄ,ËäÈ»Ëü»áËæUI¶¯Ì¬±ä»¯)ÊÇ²»»á·¢»ÓÈÎºÎ×÷ÓÃµÄ,ĞèÒªLayoutElement·¢»Ó×÷ÓÃĞèÒªÁíÍâÒ»¸öLayoutControllersÅÉÏµµÄ×é¼şÀ´ÅäºÏ
-		LayoutElementÓµÓĞÈı¸öÀàĞÍµÄÊôĞÔMin_width_height, Preferred_width_height, Flexible_width_height
-			Flexible_width_height²¢²»ÊÇ³£¹æµÄµ¥Î»,µ±×ÓÎïÌåÖĞ¶à¸öFlexibleÉúĞ§µÄÊ±ºò,»á°´FlexibleµÄ±ÈÀıÆ½·Ö¿Õ¼ä
-			¹¤×÷Ô­Àí:Ê×ÏÈMin»á±»·ÖÅä,Min·ÖÅäÍê¸¸ÎïÌå»¹ÓĞ¶àÓàµÄ¿Õ¼äÔòPreferred»á±»·ÖÅä,Èç¹û»¹ÓĞÊ£ÓàµÄ¿Õ¼äÔòFlexible»á±»·ÖÅä
+Layout Element:UIå¸ƒå±€å…ƒç´ 
+		LayoutElementå…·æœ‰å¹¿ä¹‰å’Œç‹­ä¹‰çš„åŒºåˆ«
+			å¹¿ä¹‰:LayoutElementæŒ‡ä¸€åˆ‡é™„åŠ äº†RectTransformå’Œä»»æ„æ•°é‡UIç»„ä»¶çš„GameObject
+			ç‹­ä¹‰:LayoutElementæŒ‡ä¸€ä¸ªå¯é€‰çš„UIç»„ä»¶
+			é€šè¿‡é™„åŠ LayoutElementç»„ä»¶çš„ä¼˜å…ˆçº§é«˜äºUIç»„ä»¶è‡ªå¸¦çš„LayoutElementçš„ä¼˜å…ˆçº§,ä¸€ä¸ªgameObjectå¯ä»¥é™„åŠ å¤šä¸ªLayoutElementç»„ä»¶,ç»„ä»¶ä¹‹é—´çš„ä¼˜å…ˆçº§ç”±Layout Priorityæ¥å†³å®š
+		å•ç‹¬çš„LayoutElementç»„ä»¶(åŒ…æ‹¬UIç»„ä»¶è‡ªå¸¦çš„,è™½ç„¶å®ƒä¼šéšUIåŠ¨æ€å˜åŒ–)æ˜¯ä¸ä¼šå‘æŒ¥ä»»ä½•ä½œç”¨çš„,éœ€è¦LayoutElementå‘æŒ¥ä½œç”¨éœ€è¦å¦å¤–ä¸€ä¸ªLayoutControllersæ´¾ç³»çš„ç»„ä»¶æ¥é…åˆ
+		LayoutElementæ‹¥æœ‰ä¸‰ä¸ªç±»å‹çš„å±æ€§Min_width_height, Preferred_width_height, Flexible_width_height
+			Flexible_width_heightå¹¶ä¸æ˜¯å¸¸è§„çš„å•ä½,å½“å­ç‰©ä½“ä¸­å¤šä¸ªFlexibleç”Ÿæ•ˆçš„æ—¶å€™,ä¼šæŒ‰Flexibleçš„æ¯”ä¾‹å¹³åˆ†ç©ºé—´
+			å·¥ä½œåŸç†:é¦–å…ˆMinä¼šè¢«åˆ†é…,Minåˆ†é…å®Œçˆ¶ç‰©ä½“è¿˜æœ‰å¤šä½™çš„ç©ºé—´åˆ™Preferredä¼šè¢«åˆ†é…,å¦‚æœè¿˜æœ‰å‰©ä½™çš„ç©ºé—´åˆ™Flexibleä¼šè¢«åˆ†é…
 
 
 
-HorizontalLayoutGroup:ºáÏòµÄ×Ô¶¯²¼¾Ö¿Ø¼ş
-		ChildControlsSize:ÆÁ±ÎµôLayoutController¶Ô²¼¾ÖÊôĞÔµÄÓ°Ïì(Ò²¾ÍÊÇ×ÓÎïÌåµÄLayoutElement²»»á·¢»Ó×÷ÓÃÁË)
-		ChildForceExpand:½«×ÓÎïÌåµÄFlexible¶¼ÉèÖÃÎª1(Èç¹û²»¹´Ñ¡ChildControlsSizeµÄÊ±ºò¹´Ñ¡Õâ¸öÑ¡Ïî,×ÓÎïÌåµÄ´óĞ¡²»»á·¢Éú¸Ä±ä,µ«ÊÇ×ø±ê»á·¢Éú¸Ä±äÀ´Ìî³ä¿ÕÓàµÄ¿Õ¼ä)
+HorizontalLayoutGroup:æ¨ªå‘çš„è‡ªåŠ¨å¸ƒå±€æ§ä»¶
+		ChildControlsSize:å±è”½æ‰LayoutControllerå¯¹å¸ƒå±€å±æ€§çš„å½±å“(ä¹Ÿå°±æ˜¯å­ç‰©ä½“çš„LayoutElementä¸ä¼šå‘æŒ¥ä½œç”¨äº†)
+		ChildForceExpand:å°†å­ç‰©ä½“çš„Flexibleéƒ½è®¾ç½®ä¸º1(å¦‚æœä¸å‹¾é€‰ChildControlsSizeçš„æ—¶å€™å‹¾é€‰è¿™ä¸ªé€‰é¡¹,å­ç‰©ä½“çš„å¤§å°ä¸ä¼šå‘ç”Ÿæ”¹å˜,ä½†æ˜¯åæ ‡ä¼šå‘ç”Ÿæ”¹å˜æ¥å¡«å……ç©ºä½™çš„ç©ºé—´)
 
 	
 GridLayoutGroup:
-	padding:ÆäÊµÊÇÒ»¸öRectOffsetÀà => RectOffsetÓĞ6¸öÊôĞÔ£¬left,right,top,bottom,vertical(top + bottom),horizontal(left + right)
-	spacing:ÆäÊµÊÇÒ»¸öVector2Àà => x¾ö¶¨ÔªËØÖ®¼äx×ø±êÖ®¼äµÄ¾àÀë£¬y¾ö¶¨y×ø±ê
-	contraint:¾ö¶¨²¼¾ÖµÄÏŞÖÆ,ÊÇÒ»¸öGridLayoutGroupµÄÄÚ²¿Ã¶¾Ù(Flexible, FixedColumnCount(ÏŞÖÆÁĞÊı), FixedRowCount(ÏŞÖÆĞĞÊı))
-	¼ÆËã¹ı³Ì:
-		µ÷ÓÃCalculateLayoutInputHorizontal():
-			Èç¹ûÊÇConstraint.FixedColumnCount(¹Ì¶¨ÁĞÊı), ÉèÖÃminColumnsºÍpreferredColumnsÎª¸ø¶¨µÄÁĞÊı
-			Èç¹ûÊÇConstraint.FixedRowCount(¹Ì¶¨ĞĞÊı), ÉèÖÃminColumnsºÍPreferredColumnsÎªm_RectChildrenµÄÊıÄ¿/¸ø¶¨µÄĞĞÊı
-			¸ù¾İminColumnºÍPreferredColumns¼ÆËãminWidth,preferredWidth,FlexibleWidth
-		µ÷ÓÃCalculateLayoutInputVertical:
-			¹ı³ÌÍ¬ÉÏÖ»²»¹ı¼ÆËãµÄÊÇRowºÍHeight
-		SetLayoutHorizontalºÍSetLayoutVerticalµ÷ÓÃSetCellsAlongAxis(),±éÀúm_RectChildrenÁĞ±íµÄÔªËØ,¼ÆËã³öÃ¿¸öÔªËØµÄcellsize,position
-		µ÷ÓÃSetChildAlongAxisÉèÖÃ´óĞ¡ºÍÎ»ÖÃ
+	padding:å…¶å®æ˜¯ä¸€ä¸ªRectOffsetç±» => RectOffsetæœ‰6ä¸ªå±æ€§ï¼Œleft,right,top,bottom,vertical(top + bottom),horizontal(left + right)
+	spacing:å…¶å®æ˜¯ä¸€ä¸ªVector2ç±» => xå†³å®šå…ƒç´ ä¹‹é—´xåæ ‡ä¹‹é—´çš„è·ç¦»ï¼Œyå†³å®šyåæ ‡
+	contraint:å†³å®šå¸ƒå±€çš„é™åˆ¶,æ˜¯ä¸€ä¸ªGridLayoutGroupçš„å†…éƒ¨æšä¸¾(Flexible, FixedColumnCount(é™åˆ¶åˆ—æ•°), FixedRowCount(é™åˆ¶è¡Œæ•°))
+	è®¡ç®—è¿‡ç¨‹:
+		è°ƒç”¨CalculateLayoutInputHorizontal():
+			å¦‚æœæ˜¯Constraint.FixedColumnCount(å›ºå®šåˆ—æ•°), è®¾ç½®minColumnså’ŒpreferredColumnsä¸ºç»™å®šçš„åˆ—æ•°
+			å¦‚æœæ˜¯Constraint.FixedRowCount(å›ºå®šè¡Œæ•°), è®¾ç½®minColumnså’ŒPreferredColumnsä¸ºm_RectChildrençš„æ•°ç›®/ç»™å®šçš„è¡Œæ•°
+			æ ¹æ®minColumnå’ŒPreferredColumnsè®¡ç®—minWidth,preferredWidth,FlexibleWidth
+		è°ƒç”¨CalculateLayoutInputVertical:
+			è¿‡ç¨‹åŒä¸Šåªä¸è¿‡è®¡ç®—çš„æ˜¯Rowå’ŒHeight
+		SetLayoutHorizontalå’ŒSetLayoutVerticalè°ƒç”¨SetCellsAlongAxis(),éå†m_RectChildrenåˆ—è¡¨çš„å…ƒç´ ,è®¡ç®—å‡ºæ¯ä¸ªå…ƒç´ çš„cellsize,position
+		è°ƒç”¨SetChildAlongAxisè®¾ç½®å¤§å°å’Œä½ç½®
 	
 	
 
