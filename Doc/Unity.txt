@@ -2,3 +2,35 @@
 	SceneManager.LoadScene(string sceneName, LoadSceneMode mode) mode:Single,Additive
 	同步的加载,场景会在下一帧才开始加载
 	SceneManager.LoadSceneAsync(string sceneName, LoadSceneMode mode)异步加载
+
+RenderTexture:将一个FrameBufferObject连接到一个server-side的Texture对象
+	server-side的Texture:在渲染的过程中，贴图最开始是存在cpu的内存中的，这个贴图被称为client-side的Texture
+		它最终要送到GPU的内存中，才能使用它进行渲染，被送到GPU中的那一份texture称为server-side的Texture，Texture中CPU和GPU之间的拷贝要考虑带宽
+	FrameBufferObject
+		FrameBuffer就是GPU里渲染结果的存储地，所有的绘制结果都是存在这里
+		有一个默认的FBO直接连接到我们显示器的窗口区域，把我们绘制的结果直接显示在窗口区域
+		现在的GPU架构中通常会创建很多个FBO，他们不连接窗口区域，它们的用途是允许我们把渲染的结果存储在GPU的一块区域，方便之后使用
+		要的到FBO中的贴图有很多种方式:
+			unity中的RenderTexture直接定义了一个server-side的texture对象，然后直接绘制到这个texture上
+	常用的使用方法:
+		yield return new WaitForEndOfFrame();
+		//分配texture的内存
+		RenderTexture rdt = RenderTexture.GetTemporary(width, height, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default);
+		//将目标texture复制到rdt上
+		Graphics.Blit(resource, rdt);
+		//新建一个texture存储这个rdt
+		Texture2D texture2D = new Texture2D(width, height, TextureFormat.RGBA32, false);
+		//记录之间active的RenderTexture,之后还原回去
+		RenderTexture original = RenderTexture.active;
+		RenderTexture.active = rdt;
+		texture2D.ReadPixels(new Rect(0,0,width,height), 0,0);
+		texture2D.Apply();
+		//还原
+		RenderTexture.active = original;
+		//释放内存
+		RenderTexture.ReleaseTemporary(rdt);
+
+
+
+
+

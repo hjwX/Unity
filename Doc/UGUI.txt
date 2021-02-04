@@ -12,6 +12,14 @@ StandaloneInputModule:继承于PointerInputModule 面向PC,Mac&Linux
 
 TouchInputModule:继承于PointerInputModule 面向android&ios
 
+//将鼠标坐标转换到指定UI的局部坐标
+RectTransformUtility.ScreenPointToLocalPointInRectangle(RectTransform, input.point, out position);
+
+
+
+
+
+
 IEventSystemHandler:事件的接口类,下面的接口均继承了它
 	IPointerEnterHandler:鼠标移动进入到了UI的范围内(进入的瞬间事件)
 	IPointerExitHandler:鼠标移出了UI的范围(瞬发事件)
