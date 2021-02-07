@@ -1,0 +1,34 @@
+1.资源文件:
+	指一些创建好并且不再修改的文件，如FBX，贴图，音频，视频等文件
+	这样的文件在导入unity的时候unity都会对其进行转化，每一个类型都有一个对应的Importer如AudioImporter,modelImporter等
+
+2.代码文件:
+	代码文件包括所有的代码文件，代码库文件，shader文件，在导入时unity都会进行一次编译
+
+3.序列化文件:
+	文本文件比较特殊不属于序列化文件，序列化文件通常指unity能够序列化的文件，一般都是unity自身的一些类型，Prefab,Asset,Mat等，这些文件能够在运行时反序列化为对应的类的一个实例
+
+4.文本文档:
+	文本文档不是序列化文件，但是unity可以识别为TextAsset。很像资源文件，但是又不需要资源文件那样进行设置和转化，比如txt,xml文件等
+
+5.非序列化文件:
+	非序列化文件是unity无法识别的文件，比如一个文件夹会被认为是一个文件，但是无法识别
+
+6.Meta文件:
+	定义了同目录下同名非Meta文件的唯一ID:GUID。对于unity的序列化文件，引用其他的对象用的就是这个GUID。一旦一个文件的GUID变化了，可能引起引用的丢失
+	存储上文中资源文件的ImporterSetting数据，所以修改配置meta文件也会发生改变
+
+
+二.Meta文件详解
+	guid:是meta文件最重要的一个属性，这个guid代表了这个文件无论这个文件是什么类型的(包括文件夹)
+		通过guid就可以找到这个文件，AssetDataBase.GUIDToAssetPath和AssetDataBase.AssetPathToGUID互转
+
+	importSetting:记录Inspector面板上的条目信息，把一个文件和它的meta文件复制到另一个unity工程中属性不会变
+
+	FileID(LocalID):对于一个文件下有多个文件的情况(像图集)就需要另外一个ID来定位一个文件这个ID就是LocalID在meta文件是FileID
+		对于资源文件，非序列化文件，一般不会修改源文件所以FileID记录在meta文件中
+		对于序列文件，自身数据里会存储自身的FileID，还会有一些组件的FileID，而meta文件只有自身的FileID
+	
+
+
+
