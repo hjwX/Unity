@@ -30,6 +30,8 @@ RenderTexture:将一个FrameBufferObject连接到一个server-side的Texture对�
 		//释放内存
 		RenderTexture.ReleaseTemporary(rdt);
 
+Pixels per unit:本意是一个本图的图片和unity的单位之间的映射关系，即一个unity单位对应该图片中的多少个像素单位
+
 
 
 

@@ -1,0 +1,13 @@
+Light
+	
+Directional Light:
+	type: 光源的类型
+	Color: 光源的颜色
+	Mode: 光照应用的模式
+		RealTime:灯光作用于所有类型的物体
+		Mixed:灯光只作用于动态的物体
+		Baked:灯光只作用于静态的物体
+	Intensity:光照的强度
+	Indirect Multiplier:间接光照的强度，大于1时每次反射光照强度增强，小于1每次反射光照强度减少，设置为0没有反射
+	Shadow Type:阴影的类型，硬阴影，软阴影，无阴影，baked最好使用软阴影，效果比较好
+	
