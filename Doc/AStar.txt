@@ -1,0 +1,46 @@
+A*寻路算法
+
+算法规则:
+	初始化opneList和closeList
+		openList:下一步可能位置
+		closeList:记录已经走过的位置
+	将起点加入openList,并把七点的优先级设为最高
+	如果openList不是空，则从open List中取优先级最高的位置 n
+	openList是空，这个时候还没有到达终点，则无法到达终点
+		如果取到的位置n是终点：则从终点追踪parent一直到起点
+			返回路径，结束
+		如果n不是终点:
+			将位置从openList中移除，加入closeList
+			遍历位置的临近位置：
+				如果临近位置在closeList,跳过
+				如果临近位置不在openList中
+					将临近位置的parent设置为n
+					计算临近位置的优先级
+					加入openList
+				如果临近位置在openList中
+					计算临近位置的优先级
+					如果当前的优先级大于在openList中的优先级
+						将parent设置为n
+					否则不做处理
+
+
+关键是计算优先级的函数
+	G(n):起点到当前位置的花费
+	H(n):当前位置到终点的启发函数
+	F(n) = G(n) + H(n):优先级函数，值越小优先级越高
+	
+	H(n)是高度可定制的，也会很大程度上影响算的性能
+	常用来计算H(n)的几种算法：
+		曼哈顿距离：
+			H(n) = abs(pt1.x - pt2.x) + abs(pt1.y - pt2.y)
+		对角距离:
+			dx = abs(pt1.x - pt2.x)
+			dy = abs(pt1.y - pt2.y)
+			H(n) = dx + dy + min(dx, dy) * sqrt(2) - 2*min(dx, dy)
+		欧几里得距离：
+			H(n) = sqrt(dx * dx, dy * dy)
+	
+	
+	具体怎么使用，看实际情况，当然也可以自定义H(n)
+			
+		
