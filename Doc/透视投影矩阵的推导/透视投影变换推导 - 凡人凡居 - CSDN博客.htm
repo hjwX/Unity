@@ -1,0 +1,783 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0059)http://blog.csdn.net/gnuser/archive/2010/01/09/5164961.aspx -->
+<HTML xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>透视投影变换推导 - 凡人凡居 - CSDN博客</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=utf-8">
+<SCRIPT type=text/javascript>
+        try { document.domain = "csdn.net"; } catch (ex) { }
+    </SCRIPT>
+
+<SCRIPT src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/jquery.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/jquery.highlighter.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/highlighter.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/common.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/AreaCounter.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/feedback.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/relatedarticle.js" 
+type=text/javascript></SCRIPT>
+<LINK media=all href="透视投影变换推导 - 凡人凡居 - CSDN博客.files/clover_1.css" type=text/css 
+rel=stylesheet><LINK media=all 
+href="透视投影变换推导 - 凡人凡居 - CSDN博客.files/csdn_favbykimi.css" type=text/css 
+rel=stylesheet><LINK href="http://profile.csdn.net/gnuser/picture/1.ico" 
+rel="Shortcut Icon"><LINK title=RSS 
+href="http://feeds.feedsky.com/csdn.net/gnuser" type=application/rss+xml 
+rel=alternate>
+<STYLE type=text/css>BODY {
+	FONT-FAMILY: Tahoma, inherit
+}
+TABLE {
+	FONT-FAMILY: Tahoma, inherit
+}
+P {
+	FONT-FAMILY: Tahoma, inherit
+}
+H1 {
+	FONT-FAMILY: Tahoma, inherit
+}
+H2 {
+	FONT-FAMILY: Tahoma, inherit
+}
+H3 {
+	FONT-FAMILY: Tahoma, inherit
+}
+H4 {
+	FONT-FAMILY: Tahoma, inherit
+}
+A {
+	MARGIN-LEFT: 3px; MARGIN-RIGHT: 3px
+}
+A:link {
+	COLOR: #c53
+}
+A:visited {
+	COLOR: #922
+}
+A:hover {
+	COLOR: #fa7; TEXT-DECORATION: none
+}
+A.headermaintitle {
+	FONT-SIZE: x-large; FONT-FAMILY: Tahoma, inhertit
+}
+DIV.postTitle IMG {
+	DISPLAY: none
+}
+DIV.postFoot {
+	FONT-SIZE: 12px
+}
+</STYLE>
+
+<META content="MSHTML 6.00.2900.5945" name=GENERATOR></HEAD>
+<BODY id=defaultuser>
+<DIV id=csdnblog_allwrap>
+<DIV id=csdnblog_midwrap>
+<SCRIPT src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/pub_topnav.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT language=javascript type=text/javascript>
+    // 页面加载完毕，脚本开始执行
+    $(document).ready(function() {
+        ChangeUserState();
+        $("#notice").find("a").click(HideNoticeInfo);
+    });
+    
+    var userName = getCookie("activeUserName");
+    var isGuest = !userName || userName == "Guest";
+    var delay = 20 * 60 * 1000;
+    var timer = 0;
+
+    function ChangeUserState() {        
+        clearInterval(timer);
+        if (isGuest) {
+            HideNoticeInfo();
+        }
+        else {
+            RefreshNoticeInfo();
+            timer = setInterval( RefreshNoticeInfo, delay);
+        }
+    }
+    
+    var apiUrl = "/!handler/NoticeHandler.ashx?jsoncallback=?";
+    function RefreshNoticeInfo() {
+        $.getJSON(apiUrl + "&_t=" + Math.random(), function(result) {
+            if (result.noticeNum) {
+                newNoticeCount = result.noticeNum;
+                if (newNoticeCount <= 0) {
+                    $("#notice").hide();
+                }
+                else {
+                    $("#noticeCount").text(newNoticeCount);
+                    $("#notice").show();
+                }
+            }
+        });
+    }
+    
+    function HideNoticeInfo() {
+        $("#notice").hide();
+    }
+</SCRIPT>
+
+<DIV id=csdnblog_header>
+<H1><A href="http://blog.csdn.net/gnuser">凡人凡居</A></H1>
+<H2></H2>
+<UL id=personalnav>
+  <LI id=notice style="DISPLAY: none"><SPAN class=newnotice><A class=red 
+  onclick=LogClickCount(this,216); href="http://hi.csdn.net/space-notice.html" 
+  target=_blank><SPAN id=noticeCount></SPAN>条新通知</A></SPAN> </LI>
+  <LI style="DISPLAY: none"><A id=a_login 
+  href="http://passport.csdn.net/UserLogin.aspx">登录</A> </LI>
+  <LI style="DISPLAY: none"><A id=a_register 
+  href="http://passport.csdn.net/CSDNUserRegister.aspx" target=_blank>注册</A> 
+  </LI>
+  <LI style="DISPLAY: none"><A id=a_welcome href="http://hi.csdn.net/" 
+  target=_blank>欢迎</A> </LI>
+  <LI style="DISPLAY: none"><A id=a_exit 
+  href="http://writeblog.csdn.net/Signout.aspx">退出</A> </LI>
+  <LI style="DISPLAY: none"><A id=a_myblog href="http://blog.csdn.net/">我的博客</A> 
+  </LI>
+  <LI style="DISPLAY: none"><A id=a_configure 
+  href="http://writeblog.csdn.net/configure.aspx" target=_blank>配置</A> </LI>
+  <LI style="DISPLAY: none"><A id=a_postedit 
+  href="http://writeblog.csdn.net/PostEdit.aspx" target=_blank>写文章</A> </LI>
+  <LI style="DISPLAY: none"><A id=a_postlist 
+  href="http://writeblog.csdn.net/PostList.aspx" target=_blank>文章管理</A> </LI>
+  <LI><A id=a_bloghome href="http://blog.csdn.net/" target=_blank>博客首页</A> 
+</LI></UL>
+<UL id=blogsearchsty>
+  <LI><INPUT class=bolgsearch id=inputSearch> </LI>
+  <LI class=selectsty><SELECT id=Search_ddlSearchScope 
+  name=Search:ddlSearchScope> <OPTION value=all selected>全站</OPTION> <OPTION 
+    value=gnuser>当前博客</OPTION></SELECT> </LI>
+  <LI><INPUT class=bolggobtn id=buttonSearch type=button value=搜索> </LI></UL>
+<UL id=menu>
+  <LI><A href="http://hi.csdn.net/gnuser" target=_blank>空间</A> </LI>
+  <LI><A class=on href="http://blog.csdn.net/gnuser">博客</A> </LI>
+  <LI><A href="http://hi.csdn.net/!s/friend/list/gnuser" target=_blank>好友</A> 
+  </LI>
+  <LI><A href="http://hi.csdn.net/!s/album/list/gnuser" target=_blank>相册</A> 
+  </LI>
+  <LI><A class=last href="http://hi.csdn.net/!s/wall/to/gnuser" 
+  target=_blank>留言</A> </LI></UL></DIV>
+<SCRIPT type=text/javascript>
+    var CurrentUserName = 'gnuser';
+</SCRIPT>
+
+<DIV id=csdnblog_sidebar>
+<DIV class=gutter>
+<DIV class=aboutauthor>
+<DL>
+  <DT>用户操作 
+  <DD class=middle><A href="http://hi.csdn.net/!s/wall/to/gnuser" 
+  target=_blank>[留言]</A>&nbsp; <A href="http://hi.csdn.net/!s/msg/to/gnuser" 
+  target=_blank>[发消息]</A>&nbsp; <A 
+  href="http://hi.csdn.net/!s/friend/add/gnuser" target=_blank>[加为好友]</A>&nbsp; 
+  <SPAN id=userInfo></SPAN><SPAN id=SubscriptionList>
+  <DT>订阅我的博客 
+  <DD><A href="http://feeds.feedsky.com/csdn.net/gnuser"><IMG alt=XML聚合 
+  src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/gif.gif" border=0> </A>&nbsp;&nbsp; <A 
+  href="http://feeds.feedsky.com/csdn.net/gnuser" target=_blank><IMG alt=FeedSky 
+  src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/feedsky.gif" border=0> </A>
+  <DD><A 
+  href="http://www.xianguo.com/subscribe.php?url=http://feeds.feedsky.com/csdn.net/gnuser" 
+  target=_blank><IMG alt=订阅到鲜果 
+  src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/rss_xianguo.jpg" border=0> </A>
+  <DD><A 
+  href="http://fusion.google.com/add?feedurl=http://feeds.feedsky.com/csdn.net/gnuser" 
+  target=_blank><IMG alt=订阅到Google 
+  src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/rss_google.gif" border=0> </A>
+  <DD><A 
+  href="http://www.zhuaxia.com/add_channel.php?url=http://feeds.feedsky.com/csdn.net/gnuser" 
+  target=_blank><IMG alt=订阅到抓虾 
+  src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/rss_zhuaxia.gif" border=0> </A></SPAN>
+  <DT><SPAN class=floatright style="DISPLAY: none"><A class=a_edit 
+  href="http://writeblog.csdn.net/configure.aspx" 
+  target=_blank>[编辑]</A></SPAN>gnuser的公告 
+  <DD>
+  <DT><SPAN class=floatright style="DISPLAY: none"><A class=a_edit 
+  href="http://writeblog.csdn.net/EditCategories.aspx?catID=1" 
+  target=_blank>[编辑]</A></SPAN>文章分类 
+  <DD>
+  <DIV class=publiclist_sidebar>
+  <UL>
+    <LI><A href="http://blog.csdn.net/gnuser/category/582935.aspx/rss"><IMG 
+    alt=(RSS) src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/rss.gif"></A><A 
+    title=从今天起开始为了薪水而奋斗。 
+    href="http://blog.csdn.net/gnuser/category/582935.aspx">C/C++面试</A>
+    <LI><A href="http://blog.csdn.net/gnuser/category/451312.aspx/rss"><IMG 
+    alt=(RSS) src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/rss.gif"></A><A 
+    title=俗称破解，雅称加密与解密技术，学就是，哪儿那么多废话 
+    href="http://blog.csdn.net/gnuser/category/451312.aspx">Crack学习</A>
+    <LI><A href="http://blog.csdn.net/gnuser/category/399156.aspx/rss"><IMG 
+    alt=(RSS) src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/rss.gif"></A><A title=上班了,养活自己 
+    href="http://blog.csdn.net/gnuser/category/399156.aspx">java基础</A>
+    <LI><A href="http://blog.csdn.net/gnuser/category/297242.aspx/rss"><IMG 
+    alt=(RSS) src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/rss.gif"></A><A 
+    title=喜欢linux的自由 
+    href="http://blog.csdn.net/gnuser/category/297242.aspx">linux学习</A>
+    <LI><A href="http://blog.csdn.net/gnuser/category/627970.aspx/rss"><IMG 
+    alt=(RSS) src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/rss.gif"></A><A 
+    title=主要在windows下开发 
+    href="http://blog.csdn.net/gnuser/category/627970.aspx">OpenGL学习</A>
+    <LI><A href="http://blog.csdn.net/gnuser/category/399174.aspx/rss"><IMG 
+    alt=(RSS) src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/rss.gif"></A><A 
+    title=j2EE,俺是菜鸟 
+    href="http://blog.csdn.net/gnuser/category/399174.aspx">web开发</A>
+    <LI><A href="http://blog.csdn.net/gnuser/category/297245.aspx/rss"><IMG 
+    alt=(RSS) src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/rss.gif"></A><A 
+    title=拿起斧头和铁锹，挖出他的秘密 
+    href="http://blog.csdn.net/gnuser/category/297245.aspx">windows学习</A>
+    <LI><A href="http://blog.csdn.net/gnuser/category/297243.aspx/rss"><IMG 
+    alt=(RSS) src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/rss.gif"></A><A 
+    title=只有实践才能真正提高 
+    href="http://blog.csdn.net/gnuser/category/297243.aspx">编程实践</A>
+    <LI><A href="http://blog.csdn.net/gnuser/category/468990.aspx/rss"><IMG 
+    alt=(RSS) src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/rss.gif"></A><A 
+    title=面试常考，内功体现 
+    href="http://blog.csdn.net/gnuser/category/468990.aspx">数据结构与算法</A>
+    <LI><A href="http://blog.csdn.net/gnuser/category/288920.aspx/rss"><IMG 
+    alt=(RSS) src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/rss.gif"></A><A 
+    title=" 无聊的时候就干点有趣的事咯。" 
+    href="http://blog.csdn.net/gnuser/category/288920.aspx">休闲娱乐</A>
+    <LI><A href="http://blog.csdn.net/gnuser/category/577731.aspx/rss"><IMG 
+    alt=(RSS) src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/rss.gif"></A><A title=菜鸟，学习中 
+    href="http://blog.csdn.net/gnuser/category/577731.aspx">游戏开发</A>
+    <LI><A href="http://blog.csdn.net/gnuser/category/656886.aspx/rss"><IMG 
+    alt=(RSS) src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/rss.gif"></A><A 
+    title=免费资料，欢迎交流 
+    href="http://blog.csdn.net/gnuser/category/656886.aspx">游戏外挂制作</A>
+    <LI><A href="http://blog.csdn.net/gnuser/category/297244.aspx/rss"><IMG 
+    alt=(RSS) src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/rss.gif"></A><A 
+    title=看过的，给过启发的资料都应该记下来。 
+    href="http://blog.csdn.net/gnuser/category/297244.aspx">资料推荐</A></LI></UL></DIV>
+  <DT><SPAN class=floatright style="DISPLAY: none"><A class=a_edit 
+  href="http://writeblog.csdn.net/EditLinks.aspx" 
+  target=_blank>[编辑]</A></SPAN>hack站点
+  <DD><A href="http://antionline.com/" target=_blank>antionline</A>
+  <DD><A href="http://www.phrack.com/" target=_blank>phrack</A>
+  <DD><A href="http://www.securityfocus.com/" target=_blank>securityfocus</A>
+  <DD><A href="http://www.windowsecurity.com/" target=_blank>windowsecurity</A>
+  <DD><A href="http://bbs.pediy.com/" target=_blank>看雪</A>
+  <DT><SPAN class=floatright style="DISPLAY: none"><A class=a_edit 
+  href="http://writeblog.csdn.net/EditLinks.aspx" 
+  target=_blank>[编辑]</A></SPAN>凡人凡居
+  <DD><A href="http://www.dirac.org/linux/gdb/" target=_blank>gdb Tutorial</A>
+  <DD><A href="http://waqy0816.googlepages.com/home" target=_blank>google 
+  page</A>
+  <DD><A href="http://www.itechcollege.com/" target=_blank>web basic</A>
+  <DD><A href="http://frfj.blogspot.com/" target=_blank>凡人凡居</A><A 
+  href="http://frfj.blogspot.com/feeds/posts/default?alt=rss" 
+  target=_blank>(RSS)</A>
+  <DD><A href="http://www.acm.uiuc.edu/sigmil/RevEng/index.html" 
+  target=_blank>逆向简介</A> 
+  <DT>存档 
+  <DD>
+  <DIV class=publiclist_sidebar>
+  <UL>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2010/03.aspx">2010年03月(2)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2010/02.aspx">2010年02月(1)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2010/01.aspx">2010年01月(3)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2009/12.aspx">2009年12月(8)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2009/11.aspx">2009年11月(1)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2009/10.aspx">2009年10月(4)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2009/09.aspx">2009年09月(3)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2009/08.aspx">2009年08月(23)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2009/07.aspx">2009年07月(11)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2009/06.aspx">2009年06月(5)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2009/05.aspx">2009年05月(3)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2009/04.aspx">2009年04月(2)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2009/03.aspx">2009年03月(6)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2009/02.aspx">2009年02月(3)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2009/01.aspx">2009年01月(1)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2008/12.aspx">2008年12月(1)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2008/11.aspx">2008年11月(6)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2008/10.aspx">2008年10月(23)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2008/09.aspx">2008年09月(18)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2008/08.aspx">2008年08月(14)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2008/05.aspx">2008年05月(5)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2007/05.aspx">2007年05月(1)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2007/04.aspx">2007年04月(8)</A>
+    <LI><A 
+    href="http://blog.csdn.net/gnuser/archive/2007/03.aspx">2007年03月(2)</A></LI></UL></DIV></DD></DL></DIV></DIV></DIV>
+<DIV id=csdnblog_content>
+<DIV class=gutter>
+<DIV class=default_contents>
+<DIV class=user_article>
+<SCRIPT src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/feedbackcount.js" 
+type=text/javascript></SCRIPT>
+
+<H1 class=title_txt><IMG height=15 alt=转载 
+src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/turnship.gif" width=15 border=0>&nbsp; 
+透视投影变换推导 <CITE class=fav_csdnstylebykimi><A class=fav_csdnstylebykimi 
+title=收藏到我的网摘中，并分享给我的朋友 
+href="javascript:d=document;t=d.selection?(d.selection.type!='None'?d.selection.createRange().text:''):(d.getSelection?d.getSelection():'');void(saveit=window.open('http://wz.csdn.net/storeit.aspx?t='+escape(d.title)+'&amp;u='+escape(d.location.href)+'&amp;c='+escape(t),'saveit','scrollbars=no,width=590,height=300,left=75,top=20,status=no,resizable=yes'));saveit.focus();">收藏</A> 
+</CITE></H1>
+<DIV class=blogstory>
+<SCRIPT type=text/javascript>
+                        document.body.oncopy = function() {
+                            if (window.clipboardData) {
+                                setTimeout(function() {
+                                    var text = clipboardData.getData("text");
+                                    if (text && text.length > 300) {
+                                        text = text + "\r\n\n本文来自CSDN博客，转载请标明出处：" + location.href;
+                                        clipboardData.setData("text", text);
+                                    }
+                                }, 100);
+                            }
+                        }
+					</SCRIPT>
+
+<SCRIPT type=text/javascript>                        function StorePage() { d = document; t = d.selection ? (d.selection.type != 'None' ? d.selection.createRange().text : '') : (d.getSelection ? d.getSelection() : ''); void (keyit = window.open('http://www.365key.com/storeit.aspx?t=' + escape(d.title) + '&u=' + escape(d.location.href) + '&c=' + escape(t), 'keyit', 'scrollbars=no,width=475,height=575,left=75,top=20,status=no,resizable=yes')); keyit.focus(); }</SCRIPT>
+
+<DIV class=cnt id=blog_text>
+<P>透视投影是3D固定流水线的重要组成部分，是将相机空间中的点从视锥体(frustum)变换到规则观察体(Canonical View 
+Volume)中，待裁剪完毕后进行透视除法的行为。在算法中它是通过透视矩阵乘法和透视除法两步完成的。</P>
+<P>透视投影变换是令很多刚刚进入3D图形领域的开发人员感到迷惑乃至神秘的一个图形技术。其中的理解困难在于步骤繁琐，对一些基础知识过分依赖，一旦对它们中的任何地方感到陌生，立刻导致理解停止不前。</P>
+<P>没错，主流的3D APIs如OpenGL、D3D的确把具体的透视投影细节封装起来，比如</P>
+<P>gluPerspective(…)就可以根据输入生成一个透视投影矩阵。而且在大多数情况下不需要了解具体的内幕算法也可以完成任务。但是你不觉得，如果想要成为一个职业的图形程序员或游戏开发者，就应该真正降伏透视投影这个家伙么？我们先从必需的基础知识着手，一步一步深入下去（这些知识在很多地方可以单独找到，但我从来没有在同一个地方全部找到，但是你现在找到了）。</P>
+<P>我们首先介绍两个必须掌握的知识。有了它们，我们才不至于在理解透视投影变换的过程中迷失方向（这里会使用到向量几何、矩阵的部分知识，如果你对此不是很熟悉，可以参考</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109306437.gif"> </P>
+<P>可以找到一组坐标(v1,v2,v3)，使得</P>
+<P>v = v1 a + v2 b + v3 c （1）</P>
+<P>而对于一个点p，则可以找到一组坐标（p1,p2,p3），使得</P>
+<P>p – o = p1 a + p2 b + p3 c （2）</P>
+<P>从上面对向量和点的表达，我们可以看出为了在坐标系中表示一个点（如p），我们把点的位置看作是对这个基的原点o所进行的一个位移，即一个向量—— p – 
+o（有的书中把这样的向量叫做位置向量——起始于坐标原点的特殊向量），我们在表达这个向量的同时用等价的方式表达出了点p:</P>
+<P>p = o + p1 a + p2 b + p3 c (3)</P>
+<P>(1)(3)是坐标系下表达一个向量和点的不同表达方式。这里可以看出，虽然都是用代数分量的形式表达向量和点，但表达一个点比一个向量需要额外的信息。如果我写出一个代数分量表达(1, 
+4, 7)，谁知道它是个向量还是个点！</P>
+<P>我们现在把（1）（3）写成矩阵的形式：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109300703.gif"> </P>
+<P>这里(a,b,c,o)是坐标基矩阵，右边的列向量分别是向量v和点p在基下的坐标。这样，向量和点在同一个基下就有了不同的表达：3D向量的第4个代数分量是0，而3D点的第4个代数分量是1。像这种这种用4个代数分量表示3D几何概念的方式是一种齐次坐标表示。</P>
+<P>“齐次坐标表示是计算机图形学的重要手段之一，它既能够用来明确区分向量和点，同时也更易用于进行仿射（线性）几何变换。”—— F.S. Hill, 
+JR</P>
+<P>这样，上面的(1, 4, 7)如果写成（1,4,7,0），它就是个向量；如果是(1,4,7,1)，它就是个点。</P>
+<P>下面是如何在普通坐标(Ordinary Coordinate)和齐次坐标(Homogeneous Coordinate)之间进行转换：</P>
+<P>从普通坐标转换成齐次坐标时，</P>
+<P>如果(x,y,z)是个点，则变为(x,y,z,1);</P>
+<P>如果(x,y,z)是个向量，则变为(x,y,z,0)</P>
+<P>从齐次坐标转换成普通坐标时，</P>
+<P>如果是(x,y,z,1)，则知道它是个点，变成(x,y,z);</P>
+<P>如果是(x,y,z,0)，则知道它是个向量，仍然变成(x,y,z)</P>
+<P>以上是通过齐次坐标来区分向量和点的方式。从中可以思考得知，对于平移T、旋转R、缩放S这3个最常见的仿射变换，平移变换只对于点才有意义，因为普通向量没有位置概念，只有大小和方向，这可以通过下面的式子清楚地看出：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109315864.gif"> </P>
+<P>&nbsp;&nbsp; 而旋转和缩放对于向量和点都有意义，你可以用类似上面齐次表示来检测。从中可以看出，齐次坐标用于仿射变换非常方便。</P>
+<P>此外，对于一个普通坐标的点P=(Px, Py, Pz)，有对应的一族齐次坐标(wPx, wPy, wPz, w)，其中w不等于零。比如，P(1, 4, 
+7)的齐次坐标有(1, 4, 7, 1)、（2, 8, 14, 2）、（-0.1, -0.4, -0.7, 
+-0.1）等等。因此，如果把一个点从普通坐标变成齐次坐标，给x,y,z乘上同一个非零数w，然后增加第4个分量w；如果把一个齐次坐标转换成普通坐标，把前三个坐标同时除以第4个坐标，然后去掉第4个分量。</P>
+<P>由于齐次坐标使用了4个分量来表达3D概念，使得平移变换可以使用矩阵进行，从而如F.S. Hill, 
+JR所说，仿射（线性）变换的进行更加方便。由于图形硬件已经普遍地支持齐次坐标与矩阵乘法，因此更加促进了齐次坐标使用，使得它似乎成为图形学中的一个标准。</P>
+<P>简单的线性插值</P>
+<P>这是在图形学中普遍使用的基本技巧，我们在很多地方都会用到，比如2D位图的放大、缩小，Tweening变换，以及我们即将看到的透视投影变换等等。基本思想是：给一个x属于[a, 
+b]，找到y属于[c, d]，使得x与a的距离比上ab长度所得到的比例，等于y与c的距离比上cd长度所得到的比例，用数学表达式描述很容易理解：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109316582.gif"> </P>
+<P>这样，从a到b的每一个点都与c到d上的唯一一个点对应。有一个x，就可以求得一个y。</P>
+<P>此外，如果x不在[a, b]内，比如x &lt; a或者x &gt; b，则得到的y也是符合y &lt; c或者y &gt; 
+d，比例仍然不变，插值同样适用。</P>
+<P>透视投影变换</P>
+<P>好，有了上面两个理论知识，我们开始分析这次的主角——透视投影变换。这里我们选择OpenGL的透视投影变换进行分析，其他的APIs会存在一些差异，但主体思想是相似的，可以类似地推导。经过相机矩阵的变换，顶点被变换到了相机空间。这个时候的多边形也许会被视锥体裁剪，但在这个不规则的体中进行裁剪并非那么容易的事情，所以经过图形学前辈们的精心分析，裁剪被安排到规则观察体(Canonical 
+View Volume, CVV)中进行，CVV是一个正方体，x, y, 
+z的范围都是[-1，1]，多边形裁剪就是用这个规则体完成的。所以，事实上是透视投影变换由两步组成：</P>
+<P>1） 用透视变换矩阵把顶点从视锥体中变换到裁剪空间的CVV中。</P>
+<P>2） CVV裁剪完成后进行透视除法（一会进行解释）。</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109318617.gif"> </P>
+<P>我们一步一步来，我们先从一个方向考察投影关系。</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109312546.gif"> </P>
+<P>上图是右手坐标系中顶点在相机空间中的情形。设P(x,z)是经过相机变换之后的点，视锥体由eye——眼睛位置，np——近裁剪平面，fp——远裁剪平面组成。N是眼睛到近裁剪平面的距离，F是眼睛到远裁剪平面的距离。投影面可以选择任何平行于近裁剪平面的平面，这里我们选择近裁剪平面作为投影平面。设P’(x’,z’)是投影之后的点，则有z’ 
+= -N。通过相似三角形性质，我们有关系：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109311778.gif"> </P>
+<P>同理，有</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109318074.gif"> </P>
+<P>这样，我们便得到了P投影后的点P’</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109313423.gif"> </P>
+<P>从上面可以看出，投影的结果z’始终等于-N，在投影面上。实际上，z’对于投影后的P’已经没有意义了，这个信息点已经没用了。但对于3D图形管线来说，为了便于进行后面的片元操作，例如z缓冲消隐算法，有必要把投影之前的z保存下来，方便后面使用。因此，我们利用这个没用的信息点存储z，处理成：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109317034.gif"> </P>
+<P>这个形式最大化地使用了3个信息点，达到了最原始的投影变换的目的，但是它太直白了，有一点蛮干的意味，我感觉我们最终的结果不应该是它，你说呢？我们开始结合CVV进行思考，把它写得在数学上更优雅一致，更易于程序处理。假入能够把上面写成这个形式：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109324767.gif"> </P>
+<P>那么我们就可以非常方便的用矩阵以及齐次坐标理论来表达投影变换：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109325475.gif"> </P>
+<P>其中</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109326502.gif"> </P>
+<P>哈，看到了齐次坐标的使用，这对于你来说已经不陌生了吧？这个新的形式不仅达到了上面原始投影变换的目的，而且使用了齐次坐标理论，使得处理更加规范化。注意在把<IMG 
+alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109322013.gif"> 变成<IMG 
+alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109328673.gif"> 
+的一步我们是使用齐次坐标变普通坐标的规则完成的。这一步在透视投影过程中称为透视除法（Perspective 
+Division），这是透视投影变换的第2步，经过这一步，就丢弃了原始的z值（得到了CVV中对应的z值，后面解释），顶点才算完成了投影。而在这两步之间的就是CVV裁剪过程，所以裁剪空间使用的是齐次坐标<IMG 
+alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109327541.gif"> 
+，主要原因在于透视除法会损失一些必要的信息（如原始z，第4个-z保留的）从而使裁剪变得更加难以处理，这里我们不讨论CVV裁剪的细节，只关注透视投影变换的两步。</P>
+<P>&nbsp;&nbsp; 矩阵</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109320003.gif"> </P>
+<P>就是我们投影矩阵的第一个版本。你一定会问为什么要把z写成</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109324177.gif"> </P>
+<P>有两个原因：</P>
+<P>1） P’的3个代数分量统一地除以分母-z，易于使用齐次坐标变为普通坐标来完成，使得处理更加一致、高效。</P>
+<P>2） 后面的CVV是一个x,y,z的范围都为[-1，1]的规则体，便于进行多边形裁剪。而我们可以适当的选择系数a和b，使得<IMG alt="" 
+src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109333651.gif"> 这个式子在z = 
+-N的时候值为-1，而在z = -F的时候值为1，从而在z方向上构建CVV。</P>
+<P>接下来我们就求出a和b：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109334042.gif"> </P>
+<P>这样我们就得到了透视投影矩阵的第一个版本：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109335405.gif"> </P>
+<P>使用这个版本的透视投影矩阵可以从z方向上构建CVV，但是x和y方向仍然没有限制在[-1,1]中，我们的透视投影矩阵的下一个版本就要解决这个问题。</P>
+<P>为了能在x和y方向把顶点从Frustum情形变成CVV情形，我们开始对x和y进行处理。先来观察我们目前得到的最终变换结果：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109330806.gif"> </P>
+<P>我们知道-Nx / z的有效范围是投影平面的左边界值（记为left）和右边界值（记为right），即[left, right]，-Ny / 
+z则为[bottom, top]。而现在我们想把-Nx / z属于[left, right]映射到x属于[-1, 1]中，-Ny / z属于[bottom, 
+top]映射到y属于[-1, 1]中。你想到了什么？哈，就是我们简单的线性插值，你都已经掌握了！我们解决掉它：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109338138.gif"> </P>
+<P>则我们得到了最终的投影点：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109336433.gif"> </P>
+<P>下面要做的就是从这个新形式出发反推出下一个版本的透视投影矩阵。注意到<IMG alt="" 
+src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109337886.gif"> 是<IMG alt="" 
+src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109333307.gif"> 
+经过透视除法的形式，而P’只变化了x和y分量的形式，az+b和-z是不变的，则我们做透视除法的逆处理——给P’每个分量乘上-z，得到</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109331531.gif"> </P>
+<P>而这个结果又是这么来的：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109344744.gif"> </P>
+<P>则我们最终得到：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109345287.gif"> </P>
+<P>M就是最终的透视变换矩阵。相机空间中的顶点，如果在视锥体中，则变换后就在CVV中。如果在视锥体外，变换后就在CVV外。而CVV本身的规则性对于多边形的裁剪很有利。OpenGL在构建透视投影矩阵的时候就使用了M的形式。注意到M的最后一行不是(0 
+0 0 1)而是(0 0 -1 
+0)，因此可以看出透视变换不是一种仿射变换，它是非线性的。另外一点你可能已经想到，对于投影面来说，它的宽和高大多数情况下不同，即宽高比不为1，比如640/480。而CVV的宽高是相同的，即宽高比永远是1。这就造成了多边形的失真现象，比如一个投影面上的正方形在CVV的面上可能变成了一个长方形。解决这个问题的方法就是在对多变形进行透视变换、裁剪、透视除法之后，在归一化的设备坐标(Normalized 
+Device 
+Coordinates)上进行的视口(viewport)变换中进行校正，它会把归一化的顶点之间按照和投影面上相同的比例变换到视口中，从而解除透视投影变换带来的失真现象。进行校正前提就是要使投影平面的宽高比和视口的宽高比相同。</P>
+<P>便利的投影矩阵生成函数</P>
+<P>3D APIs都提供了诸如gluPerspective(fov, aspect, near, 
+far)或者D3DXMatrixPerspectiveFovLH(pOut, fovY, Aspect, zn, 
+zf)这样的函数为用户提供快捷的透视矩阵生成方法。我们还是用OpenGL的相应方法来分析它是如何运作的。</P>
+<P>gluPerspective(fov, aspect, near, far)</P>
+<P>fov即视野，是视锥体在xz平面或者yz平面的开角角度，具体哪个平面都可以。OpenGL和D3D都使用yz平面。</P>
+<P>aspect即投影平面的宽高比。</P>
+<P>near是近裁剪平面的距离</P>
+<P>far是远裁剪平面的距离。</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071109340136.gif"> </P>
+<P>上图中左边是在xz平面计算视锥体，右边是在yz平面计算视锥体。可以看到左边的第3步top = right / 
+aspect使用了除法（图形程序员讨厌的东西），而右边第3步right = top x 
+aspect使用了乘法，这也许就是为什么图形APIs采用yz平面的原因吧！</P>
+<P>在上一篇文章中我们讨论了透视投影变换的原理，分析了OpenGL所使用的透视投影矩阵的生成方法。正如我们所说，不同的图形API因为左右手坐标系、行向量列向量矩阵以及变换范围等等的不同导致了矩阵的差异，可以有几十个不同的透视投影矩阵，但它们的原理大同小异。这次我们准备讨论一下 
+Direct3D（以下简称D3D）以及J2ME平台上的JSR184（M3G）（以下简称M3G）的透视投影矩阵，主要出于以下几个目的：</P>
+<P>（1）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+我们在写图形引擎的时候需要采用不同的图形API实现，当前主要是OpenGL和D3D。虽然二者的推导极为相似，但D3D的自身特点导致了一些地方仍然需要澄清。</P>
+<P>（2）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DirectX 
+SDK的手册中有关于透视投影矩阵的一些说明，但并不详细，甚至有一些错误，从而使初学者理解起来变得困难，而这正是本文写作的目的。</P>
+<P>（3）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+M3G是J2ME平台上的3D开发包，采用了OpenGL作为底层标准进行封装。它的透视投影矩阵使用OpenGL的环境但又进行了简化，值得一提。</P>
+<P>本文努力让读者清楚地了解D3D与M3G透视投影矩阵的原理，从而能够知道它与OpenGL的一些差别，为构建跨API的图形引擎打好基础。需要指出的一点是为了完全理解本文的内容，请读者先理解上一篇文章《深入探索透视投影变换》的内容，因为OpenGL和它们的透视投影矩阵的原理非常相似，因此这里不会像上一篇文章从基础知识讲起，而是对比它们的差异来推导变换矩阵。我们开始！</P>
+<H2>OpenGL与D3D的基本差异</H2>
+<P>前面提到，不同API的基本差异导致了最终变换矩阵的不同，而导致OpenGL和D3D的透视投影矩阵不同的原因有以下几个：</P>
+<P>（1）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OpenGL默认使用右手坐标系，而D3D 默认使用左手坐标系。</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117298284.jpg"> </P>
+<P>（2）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OpenGL使用列向量矩阵乘法而D3D使用行向量矩阵乘法。</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117298346.jpg"> </P>
+<P>（3）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OpenGL的CVV的Z范围是[-1, 
+1]，D3D的CVV的Z范围是[0, 1]。</P>
+<P>&nbsp;&nbsp;&nbsp; 以上这些差异导致了最终OpenGL和D3D的透视投影矩阵的不同。</P>
+<P>D3D的透视投影矩阵推导</P>
+<P>我们先来看最最基本的透视关系图（上一篇文章开始的时候使用的图）：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117293275.jpg"> </P>
+<P>这里我们考察的是xz平面上的关系，yz平面上的关系同理。这里o是相机位置。np是近裁剪平面，也是投影平面，N是它到相机的距离。fp是远裁剪平面，F是它到相机的位置。p是需要投影的点，p’是投影之后的点。根据相似三角形定理，我们有</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117295852.jpg"> </P>
+<P>则有</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117300300.jpg"> </P>
+<P>注意到OpenGL使用右手坐标系，因此应该使用-N（请参考上一篇文章的这一步），而D3D使用左手坐标系，因此使用N，这是二者的不同点之一。这样，我们得到投影之后的点</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117301418.jpg"> </P>
+<P>第三个信息点是变换之后的z在投影平面上的位置，也就是N，它已经没用了，我们把p’写成</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117305020.jpg"> </P>
+<P>从而用第三个没用信息点它来存储z（如果读者对这一点不太了解，请参考上一篇文章）。接下来我们求出a和b，从而在z方向上构建CVV。请注意这里是OpenGL和D3D的另一个不同点，OpenGL的CVV的z范围是[-1, 
+1]，而D3D的CVV的z范围是[0, 1]。也就是说，D3D 
+中在近裁剪平面上的点投影之后的点会处于CVV的z=0平面上，而在远裁剪平面上的点投影之后的点会在CVV的z=1平面上。这样我们的计算方程就是</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117303580.jpg"> </P>
+<P>从而我们得到了透视投影矩阵的第一个版本</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117300213.jpg"> </P>
+<P>即</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117311861.jpg"> </P>
+<P>这个时候第三个分量变换到CVV情形了，CVV的z范围是[0,1]。接下来根据上一篇文章所讲到的，我们要把前两个分量变成CVV情形，CVV的x和y范围是[-1, 
+1]，如下图所示：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117318517.jpg"> </P>
+<P>使用线性插值，我们有：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117321535.jpg"> </P>
+<P>这里left和right是投影平面的左右范围，top和bottom是投影平面的上下范围。xcvv和ycvv是我们需要算出的在CVV情形中的x和y，也就是我们要计算出的结果。但在算出它们之前，我们先把上面的式子写成：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117321018.jpg"> </P>
+<P>这里有一个需要注意的地方，如果投影平面在x方向上居中，则</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117322880.jpg"> </P>
+<P>那么第一个式子就可以销掉等号两边的1/2，写成</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117323822.jpg"> </P>
+<P>同理，如果投影平面在y方向上居中，则第二个式子可以写成</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117321481.jpg"> </P>
+<P>则我们现在分两种情况讨论：</P>
+<P>（1）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 投影平面的中心和x-y平面的中心重合（在x和y方向上都居中）</P>
+<P>（2）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 一般情况</P>
+<P>我们分别讨论：</P>
+<P>（1）特殊情况方程</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117338137.jpg"> </P>
+<P>这组是特殊情况，方程比较简单，但也是使用频率最高的方式（这是D3DXMatrixPerspectiveLH、 
+D3DXMatrixPerspectiveRH、D3DXMatrixPerspectiveFovLH、 
+D3DXMatrixPerspectiveFovRH四个方法所使用的情况）。我们导出它：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117335860.jpg"> </P>
+<P>则我们反推出透视投影矩阵：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117338136.jpg"> </P>
+<P>其中</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117342815.jpg"> </P>
+<P>而r-l和t-b可以分别看作是投影平面的宽w和高h。最后那个矩阵就是D3D的透视投影矩阵之一。另外呢，如果我们不知道right、left、 
+top以及bottom这几个参量，也可以根据视野（FOV – Field Of View）参量来求得。下面是两个平面的视野关系图：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117344205.jpg"> </P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117344076.jpg"> </P>
+<P>其中，两个fov分别是在x-z以及y-z平面上的视野。如果只给了一个视野，也可以通过投影平面的宽高比计算出来：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117348588.jpg"> </P>
+<P>用一个视野算出w或者h，然后用宽高比算出h或者w。</P>
+<P>（2）一般情况的方程</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117346248.jpg"> </P>
+<P>这组方程比较繁琐，但更具一般性（和OpenGL一般矩阵的推导一致，这也是D3DXMatrixPerspectiveOffCenterLH和D3DXMatrixPerspectiveOffCenterRH两个方法所使用的情况）。我们导出它：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117344871.jpg"> </P>
+<P>我们继续反推出透视投影矩阵：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117346234.jpg"> </P>
+<P>其中</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117368635.jpg"> </P>
+<P>最后那个矩阵就是D3D的一般透视投影矩阵。</P>
+<P>好了，目前为止，我们已经导出了D3D的两个透视投影矩阵。下面我把上一篇导出的OpenGL的透视投影矩阵写出来，大家可以拿它和刚刚导出的D3D的一般性透视投影矩阵做一个对比。</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117365532.jpg"> </P>
+<P>如果仔细观察，可以发现二者在元素的布局上是一个转置的关系，这个就是由它们使用的左右手坐标系以及使用的行列矩阵的差异造成的。而另外在一些元素的细节上也存在着差异，这是由于D3D的CVV的z范围不同造成的。可见在原理相同的情况下，细微的环境差异可以造成非常大的变化，而这就是透视投影矩阵存在诸多不同版本的原因。一般情况的透视投影矩阵也可以使用视野方式来定义，方法和特殊情况相同。</P>
+<H2>M3G的透视投影矩阵</H2>
+<P>M3G是对OpenGL进行的一个封装，它的透视投影变换矩阵被放到了类Camera里面。因为它封装了OpenGL，因此环境和OpenGL相同：右手坐标系、列向量乘法、CVV范围[-1， 
+1]。它唯一和OpenGL有些差异的地方就在于它只使用投影平面的中心和x-y平面的中心重合（在x和y方向上都居中）的情况（就是我们上面D3D的第一种特殊情况）。我们用OpenGL透视投影矩阵最终版本来说明（再次提醒，如果读者对此感到迷惑，请参考第一篇文章）：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117365532.jpg"> </P>
+<P>上面是OpenGL透视投影矩阵的最终版本，也是一般性版本，我们要把它变成特殊性，版本，非常简单，和上面D3D的特殊情况一样，我们从对x和y进行插值的那一步来看：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117364443.jpg"> </P>
+<P>和D3D的第一种情况一样，销掉两边的1/2，得到：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117364552.jpg"> </P>
+<P>则我们反推出透视投影矩阵：</P>
+<P><IMG alt="" src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/200908071117375601.jpg"> </P>
+<P>最右边那个矩阵就是M3G的透视投影矩阵。仍然可以通过视野参数来设置透视投影矩阵，这里请读者自行推导，方法与上面D3D的完全相同。</P></DIV>
+<P class="right articalinfo">发表于 @ 2010年01月09日　15:32:00&nbsp;| <A id=a_comment 
+title=评论 
+href="http://blog.csdn.net/gnuser/archive/2010/01/09/5164961.aspx#FeedBack">评论( 
+<SPAN id=FeedbackCount_5164961>loading...</SPAN>
+<SCRIPT type=text/javascript>
+                                AddFeedbackCountStack("5164961")
+							</SCRIPT>
+ ) </A>| <SPAN style="DISPLAY: none"><A class=a_edit title=编辑 
+href="http://writeblog.csdn.net/PostEdit.aspx?entryId=5164961">编辑</A>|</SPAN> <A 
+href="mailto:webmaster@csdn.net?subject=Article Report!!!&amp;body=Author:gnuserURL:http://blog.csdn.net/ArticleContent.aspx?UserName=gnuser&amp;Entryid=5164961">举报</A>| 
+<CITE class=fav_csdnstylebykimi><A class=fav_csdnstylebykimi 
+title=收藏到我的网摘中，并分享给我的朋友 
+href="javascript:d=document;t=d.selection?(d.selection.type!='None'?d.selection.createRange().text:''):(d.getSelection?d.getSelection():'');void(saveit=window.open('http://wz.csdn.net/storeit.aspx?t='+escape(d.title)+'&amp;u='+escape(d.location.href)+'&amp;c='+escape(t),'saveit','scrollbars=no,width=590,height=300,left=75,top=20,status=no,resizable=yes'));saveit.focus();">收藏</A> 
+</CITE></P><SPAN id=Post.ascx_ViewPost_PreviousAndNextEntriesDown>
+<H3 class=pagego><A 
+href="http://blog.csdn.net/gnuser/archive/2010/01/06/5146598.aspx">旧一篇:OpenGL 
+Projection Matrix(投影矩阵推导)</A>&nbsp;|&nbsp;<A 
+href="http://blog.csdn.net/gnuser/archive/2010/01/09/5165277.aspx">新一篇:投影矩阵推导遇到的问题</A></H3></SPAN>
+<DIV style="TEXT-ALIGN: left">
+<SCRIPT type=text/javascript><!--
+                            google_ad_client = "pub-1076724771190722";
+                            google_ad_slot = "4497271841";
+                            google_ad_width = 728;
+                            google_ad_height = 90;
+                        //-->
+                        </SCRIPT>
+
+<SCRIPT src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/show_ads.js" type=text/javascript>
+                        </SCRIPT>
+</DIV>
+<DIV class=mutualitys>
+<DL>
+  <DT><SPAN><A onclick=LogClickCount(this,215) href="http://blog.csdn.net/" 
+  target=_blank>查看最新精华文章 请访问博客首页</A></SPAN>相关文章 </DT></DL></DIV></DIV></DIV><A 
+name=FeedBack></A>
+<SCRIPT type=text/javascript>
+                var CurrentEntryId = '5164961';
+                var CurArticleTitle = '透视投影变换推导';
+                var AllowComment = 'True';
+                var AllowAnonymousComment = /^true$/i.test('True');
+            </SCRIPT>
+
+<DIV class=commentslist id=commentslist></DIV>
+<SCRIPT src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/CsdnDialog.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT type=text/javascript>
+                function ChangeIdentifyingCode() {
+                    var url = $('#imgValidationCode').attr('src');
+                    if (!(/&d=[\d\.]+$/).test(url)) url += "&d=1";
+                    url = url.replace(/&d=[\d\.]+$/, "&d=" + Math.random());
+                    $('#imgValidationCode').attr('src', url);
+                }
+
+                function OpenLoginDialog() {
+                    element = document.getElementById("loginBtn");
+                    var position = absolutePoint(element);
+
+                    var dialogTop = position.y - 400;
+                    var dialogLeft = position.x - 220;
+                    var dialogWidth = 435;
+                    var dialogHeight = 420;
+
+                    showWindow({ url: 'http://passport.csdn.net/UserLogin.aspx?show=replyLogin&from=http%3a%2f%2fblog.csdn.net%2f!tools%2fLoginSussess.aspx'
+                        , title: '登录'
+                        , top: dialogTop
+                        , left: dialogLeft
+                        , width: dialogWidth
+                        , height: dialogHeight
+                    });
+                }
+
+                function closeDialog(needRefresh) {
+                    closeWindow();
+                    if (needRefresh) {
+                        var url = location.href;
+                        if ((/\?/g).test(url))
+                            url = url.replace(/\?.*$/g, ("?" + Math.random()).replace(/\./g, ""));
+                        else url += ("?" + Math.random()).replace(/\./g, "");
+                        location.href = url;
+                    }
+                    $("#SubmitFeedback").unbind("click");
+                    $("#SubmitFeedback").bind("click", PostContent);
+                }
+
+                function absolutePoint(element) {
+                    var result = { x: element.offsetLeft, y: element.offsetTop };
+                    element = element.offsetParent;
+                    while (element) {
+                        result.x += element.offsetLeft;
+                        result.y += element.offsetTop;
+                        element = element.offsetParent;
+                    }
+                    return result;
+                }
+            </SCRIPT>
+
+<DIV class=commentnew>
+<DL>
+  <DT>
+  <UL>
+    <LI class=left>发表评论
+    <SCRIPT src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/RandomColumnContentJS.htm" 
+    type=text/javascript></SCRIPT>
+     </LI></UL></DT>
+  <DD>
+  <UL>
+    <LI class=lefttop>表 情： </LI>
+    <LI class=right><A onclick="return false;" 
+    href="http://blog.csdn.net/gnuser/archive/2010/01/09/5164961.aspx#"><IMG 
+    class=brow title=顶 alt=顶 src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/e01.gif"></A> 
+    <A onclick="return false;" 
+    href="http://blog.csdn.net/gnuser/archive/2010/01/09/5164961.aspx#"><IMG 
+    class=brow title=砸 alt=砸 src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/e02.gif"></A> 
+    <A onclick="return false;" 
+    href="http://blog.csdn.net/gnuser/archive/2010/01/09/5164961.aspx#"><IMG 
+    class=brow title=棒 alt=棒 src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/e03.gif"></A> 
+    <A onclick="return false;" 
+    href="http://blog.csdn.net/gnuser/archive/2010/01/09/5164961.aspx#"><IMG 
+    class=brow title=大笑 alt=大笑 src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/e04.gif"></A> 
+    <A onclick="return false;" 
+    href="http://blog.csdn.net/gnuser/archive/2010/01/09/5164961.aspx#"><IMG 
+    class=brow title=愤怒 alt=愤怒 src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/e05.gif"></A> 
+    <A onclick="return false;" 
+    href="http://blog.csdn.net/gnuser/archive/2010/01/09/5164961.aspx#"><IMG 
+    class=brow title=大哭 alt=大哭 src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/e06.gif"></A> 
+    <A onclick="return false;" 
+    href="http://blog.csdn.net/gnuser/archive/2010/01/09/5164961.aspx#"><IMG 
+    class=brow title=疑问 alt=疑问 src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/e07.gif"></A> 
+    <A onclick="return false;" 
+    href="http://blog.csdn.net/gnuser/archive/2010/01/09/5164961.aspx#"><IMG 
+    class=brow title=汗 alt=汗 src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/e08.gif"></A> 
+    <A onclick="return false;" 
+    href="http://blog.csdn.net/gnuser/archive/2010/01/09/5164961.aspx#"><IMG 
+    class=brow title=呕吐 alt=呕吐 src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/e09.gif"></A> 
+    <A onclick="return false;" 
+    href="http://blog.csdn.net/gnuser/archive/2010/01/09/5164961.aspx#"><IMG 
+    class=brow title=送花 alt=送花 src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/e10.gif"></A> 
+    </LI></UL>
+  <UL>
+    <LI class=left>评论内容： </LI>
+    <LI class=right><TEXTAREA class=textarea id=content onkeydown="if(event.ctrlKey &amp;&amp; event.keyCode==13){return $('#SubmitFeedback').click();}"></TEXTAREA> 
+    </LI></UL>
+  <DIV>
+  <UL>
+    <LI class=left>用 户 名： </LI>
+    <LI class=right><SPAN class=right id=loginTips style="DISPLAY: none"><A 
+    class=red id=loginBtn onclick="OpenLoginDialog(this);return false;" 
+    href="javascript:void(0);">登录</A> <A class=red 
+    href="http://passport.csdn.net/CSDNUserRegister.aspx" target=_blank>注册</A> 
+    </SPAN><SPAN class=right style="DISPLAY: none"><INPUT class=checkbox 
+    id=anonymous type=checkbox>匿名评论 </SPAN><SPAN class=left 
+    id=commentUser></SPAN></LI></UL></DIV>
+  <UL style="DISPLAY: none">
+    <LI class=left>验 证 码： </LI>
+    <LI class=right><INPUT class=input id=code> <A 
+    href="javascript:ChangeIdentifyingCode()"><IMG id=imgValidationCode 
+    style="VERTICAL-ALIGN: middle" alt=验证码 
+    src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/AntiBotImage.jpg"></A> <A 
+    href="javascript:ChangeIdentifyingCode()">重新获得验证码</A> </LI></UL>
+  <UL>
+    <LI class=left> </LI>
+    <LI class=right><INPUT class=submitbtn id=SubmitFeedback type=button value=发表评论> 
+    </LI></UL></DD>
+  <DD style="PADDING-LEFT: 15px; FLOAT: left; WIDTH: 300px; TEXT-ALIGN: left">
+  <SCRIPT type=text/javascript><!--
+                            google_ad_client = "pub-1076724771190722";
+                            google_ad_slot = "2166389617";
+                            google_ad_width = 300;
+                            google_ad_height = 250;
+                        //-->
+                        </SCRIPT>
+
+  <SCRIPT src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/show_ads.js" type=text/javascript>
+                        </SCRIPT>
+  </DD></DL></DIV>
+<SCRIPT type=text/javascript>
+                LoadFeedbackCount();
+                document.write("<img src='http://counter.csdn.net/pv.aspx?id=24' border=0 width=0 height=0>");
+			</SCRIPT>
+</DIV></DIV></DIV>
+<DIV id=pubfooter>
+<DL>
+  <DT>
+  <DD>Copyright © gnuser 
+  <DD>Powered by CSDN Blog </DD></DL></DIV>
+<SCRIPT src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/counter.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/ga.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT type=text/javascript>
+    try {
+        var pageTracker = _gat._getTracker("UA-2688088-9");
+        pageTracker._trackPageview();
+    } catch (err) { }
+</SCRIPT>
+</DIV></DIV><IMG height=0 src="透视投影变换推导 - 凡人凡居 - CSDN博客.files/count.htm" 
+width=0> </BODY></HTML>
