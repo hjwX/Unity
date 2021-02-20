@@ -1,0 +1,60 @@
+1.随机深度优先算法
+	先介绍一下深度优先算法：
+		深度优先算法常见于图的遍历问题中，
+		起始点V
+		1.访问起点V，记录V为达到过
+		2.找到与V相邻的未到达的点Ps
+		3.依次遍历Ps中的点
+			如果点有相邻的其他点，对它执行2，3
+			没有相邻的点则记录为已到达
+			继续遍历
+		4.直到跳出
+
+
+	随机深度优先算法思路：
+		就是在深度优先算法的基础上做了一下改变：
+			在遍历相邻点时，增加随机元素
+	
+
+具体实现：
+	假定给定的宽width, 高height
+	要生成width,height的迷宫maze[width,height]
+	约定Wall = 0;
+		Route = 1;
+	这样初始的迷宫就都是墙Wall
+	我们给定一个初始点Start
+	我们从初始点开始挖路，将初始点设置为Route
+	找初始点的相邻点，从中随机一个再开始挖，在挖的时候我们要判断一下这个可不可以挖
+	假如有其他的Route和它相邻则它不可以再挖了，回退到上一级，找其他相邻的点，
+	假如可以挖，则重复上面的操作
+	知道全部挖完
+
+伪代码：
+	CreateMaze(width, height)
+	{
+		maze = new int[width, height];
+		Dig(maze, Start);
+		return maze;
+	}
+	
+	Dig(maze, Start)
+	{	
+		//判断start是否有越界，或其他的一些判断
+		//越界直接return掉
+		if !Check(Start)
+			return;
+		//本来就是route也return掉
+		if maze[start] == Route
+			return;
+		//判断是否有两个相邻的路
+		if ！CanDig(start)
+			return;
+		
+		maze[start] = Route;
+		//把上下左右的顺序打乱一下
+		List<Dir> dirs = RandomDir();
+		foreach(Dir dir in dirs)
+			Dig(start + dir);
+	}
+		
+		
