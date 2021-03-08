@@ -4,4 +4,4 @@ material.这样在代码中动态修改材质的属性会生成一个新的insta
 sharedMaterial.修改的话，会修改所有用了这个材质的物体的材质属性
 
 MaterialPropertyBlock可以修个单个物体的材质并且不会生成新的MaterialInstance
-但是也会打断合批（自己测试得到）
+但是也会打断动态合批合批（自己测试得到）
