@@ -1,0 +1,12 @@
+Shader.PropertyToID(string property):
+	把着色器属性分配一个唯一的数字，在整个游戏中保持不变，使用int的属性标识比字符串的名字传递起来更加高效
+
+Shader.SetGlobalxxx(propertyName, value)
+Shader.SetGlobalxxx(propertyId, value)
+	想要使用这个函数改变的property不能定义在Properties中，定义在Properties中会优先使用面板中设置的属性
+	影响所有有这个字段的Shader(材质)
+	
+Material.Setxxxx(PropertyId, value)
+Material.SetXXXx(PropertyName, value)
+	可以修改定义在Properties中的属性也可以修改不在properties中的属性
+	只影响这个Material

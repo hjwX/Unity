@@ -1,0 +1,5 @@
+Game	用于指示普通的游戏内摄像机。
+SceneView	用于指示在 Editor 中渲染场景视图的摄像机。
+Preview	用于指示在 Editor 中渲染预览的摄像机。
+VR	用于指示在 Editor 中渲染 VR（编辑模式）的摄像机。
+Reflection	用于指示渲染反射探针的摄像机。

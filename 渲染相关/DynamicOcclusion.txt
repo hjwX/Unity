@@ -1,0 +1,11 @@
+Occluder：遮挡者
+occludee: 被遮挡者
+
+动态的物体不能被烘焙进occlusionCullingData,
+dynamic GameObject在运行时不可以被作为遮挡者可以被遮挡
+文档原话：Unity cannot bake dynamic GameObjects into the occlusion culling data. A dynamic GameObject can be an occludee at runtime, but it cannot be an occluder.
+
+Dynamic occlusion：Enabled物体可以被Static的Occluder遮挡
+					否者不能
+
+这个选项默认是开启的，可以关闭来减少CPU的负担
