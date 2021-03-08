@@ -13,4 +13,13 @@ order in Layer:是同一个sorting layer中的细分
 扩充：
 	能够影响渲染顺序的因素
 	1.cameraDepth 相机组件设置的深度越深越后渲染
-	2.
+	2.sortingLayer
+	3.order in Layer
+	4.RenderQueue
+
+CameraDepth:优先级最高，cameraDepth小的一定先进渲染管线
+当SortingLayer和OrderInLayer相同时RenderQueue小的先进渲染管线
+当SortingLayer和OrderInLayer不相同的时候：
+	当两个材质使用了不同的RenderQueue且这两个RenderQueue都在[0,2500]或者[2501,5000]时SortingLay和OrderInLayer生效
+	当两个材质使用的RenderQueue分别在[0,2500][2501,5000]中则一定会按照RenderQueue绘制即一定先渲染不透明的物体
+	2500时unity设置的不透明和透明物体的分界线，所以只有都是透明物体或者都是不透明物体SortingLayer和OrderInlayer才起作用
