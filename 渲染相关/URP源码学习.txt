@@ -1,0 +1,7 @@
+UniversalRenderPipeline.cs
+	//渲染入口函数
+	Render(ScriptableRenderContext renderContext, Camera[] cameras)
+		//该帧开始渲染前的一些设置
+		BeginFrameRendering(renderContext, cameras);
+		//项目的颜色空间是不是在线性空间
+		GraphicsSettings.lightsUseLinearIntensity = (QuailitySettings.activeColorSpace == ColorSpace.Linear);
