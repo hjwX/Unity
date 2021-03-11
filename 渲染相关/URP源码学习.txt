@@ -5,3 +5,33 @@ UniversalRenderPipeline.cs
 		BeginFrameRendering(renderContext, cameras);
 		//项目的颜色空间是不是在线性空间
 		GraphicsSettings.lightsUseLinearIntensity = (QuailitySettings.activeColorSpace == ColorSpace.Linear);
+		//是否使用SRPBatcher 
+		GraphicsSettings.useScriptableRenderPipelineBatching = asset.useSRPBatcher;
+		//设置每一帧的shader常量
+		SetupPerFrameShaderConstants();
+		
+		//通过camera.depth来排序depth小的先渲染
+		SortCameras(cameras);
+		for (int i = 0; i < cameras.Lenght, i++)
+		{
+			var camera = cameras[i];
+			//判断是否是game内的相机，详见CamereType
+			if (IsGameCamera(camera))
+			{
+				//详见RenderCameraStack();
+				RenderCameraStack(renderContext, camera);
+			}
+			else
+			{
+				BeginCameraRendering(renderContext, camera);
+				UpdateVolumeFramework(camera, null);
+				RenderSingleCamera(renderContext, camera);
+				EndCameraRendering(renderContext, camera);
+			}
+		}
+		EndPerFrameRender(renderContext, cameras);
+
+
+
+RenderSingleCamera(renderContext, camera)
+	

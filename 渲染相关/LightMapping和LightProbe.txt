@@ -1,0 +1,5 @@
+LightMapping:
+	把光照信息Baked到static的物体表面来模拟实时光照的效果
+
+lightProbe:
+	是把光照信息Baked到选定的点上，通过插值计算在选定范围内的光照信息
