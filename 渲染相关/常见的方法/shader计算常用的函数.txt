@@ -27,4 +27,6 @@ else if temp < 0
 else 
 	return temp
 
+Fraction 取小数部分
+
 
