@@ -1,0 +1,36 @@
+我们通常使用的都是一些强引用
+	Object obj = new Object();
+	这段代码生成一个Object对象A,obj是对对象A的一个强引用。
+	如果一个对象的强引用存在的话，对象是不会被GC的
+	
+那么可不可以我们既保持对对象的引用但是又允许在GC的时候回收对象呢？
+
+弱引用就是来解决这个问题的
+	弱引用可以让我们保持对一个对象的引用，但是在GC的时候对象可以被GC回收掉
+	Object obj = new Object();		//创建一个强引用对象
+	WeakReference wref = new WeakReference(obj);	//创建一个弱引用对象
+	obj = null;	//将对象的强引用置空，这样当GC的时候obj就可以被回收了
+
+常用的使用格式：
+	Object obj2 = wref.Target;
+	if (obj2 != null) 
+	{
+		dosomething;
+	}
+	else
+	{
+		//此时对象已经被回收了，需要新建一个对象
+		obj2 = new Object();		//创建一个强引用对象
+		wref = new WeakReference(obj2);	//创建一个弱引用对象
+		dosomething;	
+		//需要执行完之后再把强引用释放，不然可能执行逻辑的时候对象被GC回收了
+		obj2 = null;
+	}
+
+实现的原理：
+	弱引用不会把对象的引用数量+1，而强引用会
+	当一个对象只有弱引用的时候，对象在的引用数量是0，GC是可以回收的
+	
+	GC维护了一个表来跟踪弱引用，这个表不是Root的一部分 
+	当一个弱引用被创建的时候，它的引用会被插到这个表的某个位置，当GC回收的时候会检查弱引用表，如果保持了这个对象的引用则置为null;
+	

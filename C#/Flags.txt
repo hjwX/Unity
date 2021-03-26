@@ -1,0 +1,17 @@
+Flags关键字允许我们在使用枚举的时候，可以使用多个的组合
+[Flags]
+    enum WeekDays
+    { 
+        Monday = 0x1,
+        Tuesday = 0x2,
+        Wednesday = 0x4,
+        Thursday = 0x8,
+        Friday = 0x10,
+        Saturday = 0x20,
+        Sunday = 0x40
+    }
+
+一个二进制位表示一个枚举，通常都是这样定义的
+则有：
+	WeekDays weekend = Saturday | Sunday;
+	则: weekend = Saturday , Sunday;

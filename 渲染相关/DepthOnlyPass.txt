@@ -1,0 +1,5 @@
+控制Shader只写入深度值
+	 Pass {
+            ZWrite On			//写入深度值
+            ColorMask 0			//颜色遮罩 0表示不写入任何颜色
+        }
