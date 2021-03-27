@@ -1,0 +1,3 @@
+pairs：用来迭代table
+
+ipairs: 用来迭代数组
