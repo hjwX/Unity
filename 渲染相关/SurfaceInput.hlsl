@@ -42,7 +42,7 @@ CoreUtils.SetKeyword(material, "_METALLICSPECGLOSSMAP", hasGlossMap);
     如果没有则使用 finalSmoothness = specGloss.a * _Smoothness
 没有使用贴图
     specular工作流：使用_Specular.rgb作为颜色的非Alpha部分的值(实际上官方给的_Specular是没有alpha值可以设置的)
-    Metallic工作流：使用_Metallic的值作为颜色的RGB部分
+    Metallic工作流：使用_Metallic的值作为颜色的RGB部分当时金属工作流时 颜色值由Metallic计算出来
 
     如果_BaseMap的Alpha有被使用finalSmoothness = _Smoothness*albedoAlpha
     如果没有则使用 此时并没有其他的Smoothness值给到，直接finalSmoothness = _Smoothness
@@ -82,8 +82,6 @@ PerceptualRoughness = 1 - smoothness
 Roughness = PerceptualRoughness * PerceptualRouhness
 Roughness^2 = Roughness * Roughness
 
-
-
 /**
 h = (L + V) /|L + V|
 NoH = h * n 
@@ -106,3 +104,172 @@ F0 = mix(vec3(0.04), albedo, metallic)
 
 
 **/
+
+struct SurfaceData{
+    half3 albedo;  //表面的颜色
+    half3 specular; //高光的颜色
+    half metallic;  //金属度
+    half smoothness; //光滑度
+    half3 normalTS;  //切线空间下的法线向量
+    half3 emission;  //自发光
+    half occlusion;  //遮挡
+    half alpha;      //alpha
+}
+
+
+inline void InitializeStandardLitSurfaceData(float2 uv, out SurfaceData outSurfaceData)
+{
+    //对BaseMap采样获取到此处的颜色值和alpha值
+    half4 albedoAlpha = SampleAlbedoAlpha(uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
+
+    //计算此处的alpha值
+    outSurfaceData.alpha = Alpha(albedoAlpha.a, _BaseColor, _Cutoff);
+
+    //获取光泽度参数
+    half4 specGloss = SampleMetallicSpecGloss(uv, albedoAlpha.a);
+
+    //表面的颜色值
+    outSurfaceData.albedo = albedoAlpha.rgb  * _BaseColor.rgb;
+
+    #if _SPECULAR_SETUP
+        outSurfaceData.metallic = 1.0h;
+        outSurfaceData.specular = specGloss.rgb;
+    #else
+        outSurfaceData.metallic = specGloss.r;
+        outSurfaceData.specular = half3(0.0h, 0.0h, 0.0h);
+    #endif
+
+    outSurfaceData.smoothness = specGloss.a;
+    outSurfaceData.normalTS = SampleNormal(uv, Texture2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
+    outSurfaceData.occlusion = SampleOcclusion(uv);
+    outSurfaceData.emission = SampleEmission(uv, _EmissionColor,rgb, TEXTURE2D_ARGS(_EmissionMap, sampler_Emission));
+}
+
+half4 SampleAlbedoAlpha(float2 uv, TEXTURE2D_PARAM(albedoAlphaMap, sampler_albedoAlphaMap))
+{
+    SAMPLER_TEXTURE2D(albedoAlphaMap, sampler_albedoAlphaMap, uv);
+}
+
+
+struct InputData
+{
+    float3 positionWS;  //世界坐标
+    half3 normalWS;
+    half3 viewDirectionWS;
+    float4 shadowCoord;
+    half fogCoord;
+    half3 bakedGI;          //烘焙的全局光照
+    half3 vertexLighting;   //逐顶点计算光照的光的颜色
+}
+
+//LitForwardPass.hlsl
+void InitializeInputData(Varyings input, half3 normalTS, out InputData inputData)
+{
+    inputData = (inputData)0;
+    #if defined(REQUIRE_WORLD_SPACE_POS_INTERPOLATOR)
+        inputData.positionWS = input.positionWS;
+    #endif
+
+    #ifdef _NORMALMAP
+        half3 viewDirWS = half3(input.normalWS.w, input.tangentWS.w, input.bitangentWS.w);
+        inputData.normalWS = TransformTangentToWorld(normalTS, half3x3(input.tangentWS.xyz, input.bitangentWS.xyz, input.normalWS.xyz));
+    #else
+        half3 viewDirWS = input.viewDirWS;
+        inputData.normalWS = input.normalWS;
+    #endif
+    inputData.normalWS = NormalizeNormalPerPixel(inputData.normalWS);
+    viewDirWS = SafeNormalize(viewDirWS);
+    inputData.viewDirectionWS = viewDirws;
+
+    #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
+        inputData.shadowCoord = input.shadowCoord;
+    #elif defined(MAIN_LIGHT_CALCULATE_SHADOWS)
+        inputData.shadowCoord = TransformWorldToShadowCoord(inputData.positionWS);
+    #else
+        inputData.shadowCoord = float4(0,0,0,0);
+    #endif
+
+    inputData.fogCoord = input.fogFactorAndVertexLight.x;
+    inputData.vertexLighting = input.fogFactorAndVertexLight.yzw;
+    inputData.bakeGI = SAMPLE_GI(input.lightmapUV, input.vertexSH， inputData.normalWS);
+}
+
+//half4 color = UniversalFragmentPBR(inputData, surfaceData.albedo, surfaceData.metallic, surfaceData.specular, surfaceData.smoothness, surfaceData.emission, surfaceData.alpha);
+
+half4 UniversalFragmentPBR(InputData inputData, half3 albedo, half metallic, half3 specular, half smoothness, half occlusion, half3 emission, half alpha)
+{
+    BRDFData brdfData;
+    InitializeBRDFData(albedo, metallic, specular, smoothness, alpha, brdfData);
+    
+    Light mainLight = GetMainLight(inputData.shadowCoord);
+    MixRealtimeAndBakedGI(mainLight, inputData.normalWS, inputData.bakedGI, half4(0,0,0,0));
+
+    half3 color = GlobalIllumination(brdfData, inputData.bakedGI, occlusion, inputData.normalWS, inputData.viewDirectionWS);
+    color += LightingPhysicallyBased(brdfDafa, mainLight, inputData.normalWS, inputData.viewDirectionWS);
+
+    #ifdef _ADDITIONAL_LIGHT
+        uint pixelLightCount = GetAdditionalLightCount();
+        for (uint lightIndex = 0u; lightIndex < pixelLightCount; lightCount++)
+        {
+            Light light = GetAdditionalLight(lightIndex, inputData.positionWS);
+            color += LightingPhysicallyBased(brdfDafa, light, inputData.normalWS, inputData.viewDirectionWS);
+        }
+    #endif
+
+    #ifdef _ADDITIONAL_LIGHTS_VERTEX
+        color += inputData.vertexLighting * brdfData.diffuse;
+    #endif
+
+    //自发光在最后直接机上
+    color += emission;
+    return half4(color, alpha);
+}
+
+
+InitializeBRDFData(half3 albedo, half metallic, half3 specular, half smoothness, half alpha, out BRDFData outBRDFData)
+{
+    #ifdef _SPECULAR_SETUP
+        half reflectivity = ReflectivitySpecular(specular);
+        half oneMinusReflectivity = 1.0 - reflectivity;
+
+        outBRDFData.diffuse = albedo * (half3(1.0h, 1.0h, 1.0h) - specular);
+        outBRDFData.specular = specular;
+    #else
+        half oneMinusReflectivity = OneMinusReflectivityMetallic(metallic);
+        half reflectivity = 1.0 - oneMinusReflectivity;
+
+        outBRDFData.diffuse = albedo * oneMinusReflectivity;
+        outBRDFData.specular = lerp(kDieletricSpec.rgb, albedo, metallic);
+    #endif
+
+    outBRDFData.grazingTerm = saturate(smoothness + reflectivity);
+    outBRDFData.perceptualRoughness = PerceptualSmoothnessToPerceptualRoughness(smoothness);
+    outBRDFData.roughness = max(PerceptualRoughnessToRoughness(outBRDFData.perceptualRoughness), HALF_MIN);
+    outBRDFData.roughness2 = outBRDFData.roughnrss * outBRDFData.roughness;
+
+    outBRDFData.normalizationTerm = outBRDFData.roughness * 4.0h + 2.0h;
+    outBRDFData.roughness2MinusOne = outBRDFData.roughness2 - 1.0h;
+
+    #ifdef _ALPHAPERMULTIPLY_ON
+        outBRDFData.diffuse *= alpha;
+        alpha = alpha * oneMinusReflectivity + reflectivity;
+    #endif
+}
+
+//获取到反射光的占比
+half ReflectivitySpecular(half3 specular)
+{
+    #if defined(SHADER_API_GLES)
+        return specluar.r;
+    #else
+        return max(max(specular.r, specular.g), specular.b);
+}
+
+#define kDieletricSpec half4(0.04, 0.04, 0.04, 1 - 0.04);
+//计算金属流下  1-反射光占比
+// 实际上 reflectivity = lerp(kDieletricspec.r， 1， metallic)这里先计算了 oneMinusReflectivity 应该是有性能上的考虑？
+half OneMinusReflectivityMetallic()
+{
+    half oneMinusDielectricSpec = kDieletricSpec.a;
+    return oneMinusDielectricSpec - metallic * oneMinusDielectricSpec;
+}

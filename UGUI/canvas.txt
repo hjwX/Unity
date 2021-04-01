@@ -1,0 +1,20 @@
+Canvas Scaler:
+	UI Scale Mode:确定Canvas下的UI元素的缩放方式
+		Constant Pixel Size:不管屏幕的大小UI元素保持相同的像素大小
+		Scale With Screen Size:UI元素根据屏幕的大小进行缩放
+		Constant Physical Size:不管屏幕的分辨率和大小，保持相同的物理大小
+		
+	Settings for Constant Pixel Size:
+		Scale Factor:Canvas下的元素都根据一个值进行缩放
+		Reference Pixels Per Unit:UI中的多少个像素相当于一个Unity单位，如果sprite有这个设置会overrideCanvas的值
+		
+	Settings for Scale With Screen Size：
+		Reference Resolution:UI布局设置的默认屏幕分辨率，屏幕越大UI越大，越小越小
+								(想要屏幕变化时UI布局不被打破，要设置要锚点)
+		Screen Match Mode：决定当屏幕的宽高比和默认分辨率的宽高比不一致时怎么调整canvas的大小
+			Match Width or Height:
+			Expand:横向或纵向拉伸Canvas的大小，Canvas的大小不会小于Renference Resolution中的大小
+			Shrink:横向或纵向收缩Canvas的大小，Canvas的大小不会大于Renference Resolution中的大小
+	
+	Settings for Constant Physical Size:
+		使用场景不是很多，暂时不处理

@@ -1,0 +1,13 @@
+AnchoredPosition:UI相对于锚点的位置
+    当锚点重合在一个位置的时候，就是中心点相对于锚点的位置
+    当锚点不重合的时候，是中心点相对于锚点构成的矩形中心点的位置
+    设置了锚点之后,父物体的大小变化,子物体的锚点位置是不会变化的
+
+LocalPosition:UI相对于中心点的位置
+    是自己的中心点pivot相对于父物体的pivot的位置
+
+OffsetMax:UI右上角相对于锚点右上角的位置
+OffsetMin:UI左下角相对于锚点左下角的位置 锚点重合的时候右上角和左上角是同一个位置的点
+
+sizeDelta = OffsetMax - OffsetMin
+所以当锚点重合的时候SizeDelta为UI的大小

@@ -1,0 +1,85 @@
+Column:一列
+Row:一行
+Layout:布局
+
+UIBehaviour:所有UI的基类
+
+BaseInputModule:抽象类
+
+PointerInputModule:抽象类, 继承了BaseInputModule
+
+StandaloneInputModule:继承于PointerInputModule 面向PC,Mac&Linux
+
+TouchInputModule:继承于PointerInputModule 面向android&ios
+
+//将鼠标坐标转换到指定UI的局部坐标
+RectTransformUtility.ScreenPointToLocalPointInRectangle(RectTransform, input.point, out position);
+
+
+
+
+
+
+IEventSystemHandler:事件的接口类,下面的接口均继承了它
+	IPointerEnterHandler:鼠标移动进入到了UI的范围内(进入的瞬间事件)
+	IPointerExitHandler:鼠标移出了UI的范围(瞬发事件)
+	IPointClickHandler:鼠标在UI的范围内点击了, 不分点击的按键类型, 只要是点击了都会触发事件
+
+EventSystems:
+	EventSystem.current.currentSelectedGameObject检测不到Text,Image,RawImage的点击事件,其他的UI可以检测到(用之前最好测试一下)
+	ps:检测不到的UI组件应该是没有继承Selectable的UI组件(详细见 Selectable)
+	
+Selectable:可触发事件UI组件的一个基类(Button, Toggle等都继承了Selectable)
+
+
+RectTransform：
+	anchoredPosition:表示的是子物体的pivot相对于anchor的坐标,当anchor不是一个点的时候表示的是前三个元素(left, top, z)
+					ps:localPosition表示的是子物体pivot相对于父物体的pivot的坐标
+					当子物体的anchor于父物体的pivot重合时anchoredPosition于localPosition相等
+
+
+ToggleGroup：
+	ToggleGroup.ActiveToggles() 获取到在toggleGroup下的处于active状态下的toggle,active=false的toggle排除在外
+	(获取到的toggle的isOn都是true) 所以想要获取当前isOn的toggle可以直接用这个方法获取，获取到的迭代器应该只有一个元素(如果初始化的时候有几个isOn为true的，会获取到多个)
+
+
+Slider：
+	创建slider之后下面有三个子物体
+	Background:就只是一个背景图，其实就是在没有填充情况下，显示的image
+	FillArea:下面还有个Fill(Image)其中的imageType是Sliced，作用是在value变化时随value变化来填充slider
+	HandleSliderArea:它的的子物体handle(Image)显示的是滑动块
+	onValueChanged.AddListener((value) => {});
+
+Layout Element:UI布局元素
+		LayoutElement具有广义和狭义的区别
+			广义:LayoutElement指一切附加了RectTransform和任意数量UI组件的GameObject
+			狭义:LayoutElement指一个可选的UI组件
+			通过附加LayoutElement组件的优先级高于UI组件自带的LayoutElement的优先级,一个gameObject可以附加多个LayoutElement组件,组件之间的优先级由Layout Priority来决定
+		单独的LayoutElement组件(包括UI组件自带的,虽然它会随UI动态变化)是不会发挥任何作用的,需要LayoutElement发挥作用需要另外一个LayoutControllers派系的组件来配合
+		LayoutElement拥有三个类型的属性Min_width_height, Preferred_width_height, Flexible_width_height
+			Flexible_width_height并不是常规的单位,当子物体中多个Flexible生效的时候,会按Flexible的比例平分空间
+			工作原理:首先Min会被分配,Min分配完父物体还有多余的空间则Preferred会被分配,如果还有剩余的空间则Flexible会被分配
+
+
+
+HorizontalLayoutGroup:横向的自动布局控件
+		ChildControlsSize:屏蔽掉LayoutController对布局属性的影响(也就是子物体的LayoutElement不会发挥作用了)
+		ChildForceExpand:将子物体的Flexible都设置为1(如果不勾选ChildControlsSize的时候勾选这个选项,子物体的大小不会发生改变,但是坐标会发生改变来填充空余的空间)
+
+	
+GridLayoutGroup:
+	padding:其实是一个RectOffset类 => RectOffset有6个属性，left,right,top,bottom,vertical(top + bottom),horizontal(left + right)
+	spacing:其实是一个Vector2类 => x决定元素之间x坐标之间的距离，y决定y坐标
+	constraint:决定布局的限制,是一个GridLayoutGroup的内部枚举(Flexible, FixedColumnCount(限制列数), FixedRowCount(限制行数))
+	计算过程:
+		调用CalculateLayoutInputHorizontal():
+			如果是Constraint.FixedColumnCount(固定列数), 设置minColumns和preferredColumns为给定的列数
+			如果是Constraint.FixedRowCount(固定行数), 设置minColumns和PreferredColumns为m_RectChildren的数目/给定的行数
+			根据minColumn和PreferredColumns计算minWidth,preferredWidth,FlexibleWidth
+		调用CalculateLayoutInputVertical:
+			过程同上只不过计算的是Row和Height
+		SetLayoutHorizontal和SetLayoutVertical调用SetCellsAlongAxis(),遍历m_RectChildren列表的元素,计算出每个元素的cellsize,position
+		调用SetChildAlongAxis设置大小和位置
+	
+	
+

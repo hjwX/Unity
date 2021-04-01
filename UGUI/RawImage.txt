@@ -1,0 +1,11 @@
+SizeFitRawImage:
+	//当RectTransform大小改变的时候触发
+	OnRectTransformDimensionsChanges()
+	
+	思路：
+		设置默认的高宽比
+		记录上次rect的宽高
+		当宽或高发生了改变：
+			计算改变后的高宽比：
+				若更大，在当前高的情况下计算原始宽高比的宽，设置宽
+				若更小，在当前宽的情况下计算原始高宽比的高，设置高
