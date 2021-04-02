@@ -1,3 +1,128 @@
+using System.Linq.Expressions.Interpreter;
+代码设定部分：
+
+    static void InitializeRenderingData(UniversalRenderPipelineAsset settings， ref CameraData cameraData, ref CullingResults cullResults, bool requiresBlitToBackbuffer, bool anyPostPreocessingEnabled, out RederingData renderingdata)
+    {
+        var visibleLights = cullResults.visibleLights;
+
+        int mainLightIndex = GetMainLightIndex(settings, visibleLights);
+
+        bool mainLightCastShadows = false;
+        bool additionalLightsCastShadows = false;
+
+        //cameraData.maxShadowDistance <= 0 肯定是没有阴影可以render的
+        if (cameraData.maxShadowDistance > 0.0f) 
+        {
+            mainLightCastShadows = mainLightIndex != -1 
+                                && visibleLights[mainLightIndex].light != null
+                                && visibleLights[mainLightIndex].light.shadows != LightShadows.None;
+
+            //只有当额外的光 是像素渲染时 才有可能渲染阴影
+            if (settings.additionalLightsRenderingMode == LightRenderingMode.PerPixel) 
+            {
+                for (int i = 0; i < visibleLight.Length; i++) 
+                {
+                    if (i == mainLightIndex)
+                        continue;
+                    Light light = visibleLights[i].light;
+                    //URP现在只有spot类型的光 才额外的渲染阴影
+                    if (visibleLights[i].lightType == LightType.Spot && light != null && LightLambda.shadows != LightShadows.None) 
+                    {
+                        additionalLightsCastShadows = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        renderingData.cullResults = cullResults;
+        renderingData.cameraData = cameraData;
+
+        InitializeLightData(settings, visibleLights, mainLightIndex, out renderingData.lightData);
+
+    }
+
+
+    CullingResults:可以获取到相机剪裁后可以获得的lights, object, reflectivity probe;
+
+    //返回了最亮的方向光
+    //只能是方向光  最亮
+    static int GetMainLightIndex(UniversalRenderPipelineAsset setting, NativeArray<VisibleLight> visibleLights)
+    {
+        int totalVisibleLights = visibleLights.Length;
+
+        if (totalVisibleLights == 0 || settings.mainLightRenderingMode != LightRenderingMode.PerPixel) 
+            return -1;
+
+        //RenderSettings.sun可以在Lighting Settings面板中 Environment的sun source中设置
+        //如果没有设置 会默认取默认当前最亮的方向光， 没有方向光则为空
+        Light sunLight = RenderSettings.sun;
+        int brightestDirectionLightIndex = -1;
+        float brightestLightIntensity = 0.0f;
+
+        for (int i= 0; i < totalVisibleLights; i++)
+        {
+            VisibleLight currVisibleLight = visibleLights[i];
+            Light currLight = currVisibleLight.light;
+            if (currLight == null)
+                break;
+            
+            if (currLight == sunLight)
+                return i;
+            
+            if (currVisibleLight.lightType = LightType.Directional && currLight.intensity > brightestLightIntensity) 
+            {
+                brightestLightIntensity = currLight.Intensity;
+                brightestDirectionLightIndex = i;
+            }
+        }
+        return brightestDirectionLightIndex;
+    }
+
+    static void InitializeLightData(UniversalRenderPipelineAsset settings, NativeArray<VisibleLight> visibleLights, int mainLightIndex, out LightData lightData)
+    {
+        int maxPerObjectAdditionalLight = UniversalRenderPipeline.maxPerObjectLights;
+        int maxVisibleAdditionLights = UniversalRenderPipeline.maxVisibleAdditionLights;
+
+        lightData.mainLightIndex = mainLightIndex;
+
+        if (settings.additionalLightsRenderingMode != LightRenderingMode.Disabled) 
+        {
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**计算正常的表面的颜色的透明度时，使用BaseMap采样的结果乘与BaseColor这样就得到了表面该处的颜色和透明值
 当时当设置了_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A或者_GLOSSING_FROM_BASE_ALPHA时

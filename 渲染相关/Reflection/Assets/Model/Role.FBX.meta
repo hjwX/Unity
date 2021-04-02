@@ -1,0 +1,243 @@
+fileFormatVersion: 2
+guid: 8324ef28ce09e4e45af4a7c8dd2abefa
+timeCreated: 1498631378
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: armor
+    100002: B_weapon01
+    100004: B_weapon02
+    100006: B_wing
+    100008: Bip001
+    100010: Bip001 Footsteps
+    100012: Bip001 Head
+    100014: Bip001 HeadNub
+    100016: Bip001 L Calf
+    100018: Bip001 L Clavicle
+    100020: Bip001 L Finger0
+    100022: Bip001 L Finger01
+    100024: Bip001 L Finger0Nub
+    100026: Bip001 L Finger1
+    100028: Bip001 L Finger11
+    100030: Bip001 L Finger1Nub
+    100032: Bip001 L Foot
+    100034: Bip001 L Forearm
+    100036: Bip001 L Hand
+    100038: Bip001 L Thigh
+    100040: Bip001 L Toe0
+    100042: Bip001 L Toe0Nub
+    100044: Bip001 L UpperArm
+    100046: Bip001 Neck
+    100048: Bip001 Pelvis
+    100050: Bip001 R Calf
+    100052: Bip001 R Clavicle
+    100054: Bip001 R Finger0
+    100056: Bip001 R Finger01
+    100058: Bip001 R Finger0Nub
+    100060: Bip001 R Finger1
+    100062: Bip001 R Finger11
+    100064: Bip001 R Finger1Nub
+    100066: Bip001 R Foot
+    100068: Bip001 R Forearm
+    100070: Bip001 R Hand
+    100072: Bip001 R Thigh
+    100074: Bip001 R Toe0
+    100076: Bip001 R Toe0Nub
+    100078: Bip001 R UpperArm
+    100080: Bip001 Spine
+    100082: Bip001 Spine1
+    100084: Bone_Chest_L
+    100086: Bone_Chest_R
+    100088: Bone_hair_01
+    100090: Bone_hair_02
+    100092: Bone_hair_03
+    100094: Bone_hair_04
+    100096: Bone_hair_05
+    100098: Bone_hair_06
+    100100: Bone_hair_07
+    100102: Bone_hair_08
+    100104: Bone_qun_100
+    100106: Bone_qun_101
+    100108: Bone_qun_102
+    100110: Bone_qun_200
+    100112: Bone_qun_201
+    100114: Bone_qun_202
+    100116: Bone_qun_300
+    100118: Bone_qun_301
+    100120: Bone_qun_302
+    100122: Bone_qun_400
+    100124: Bone_qun_401
+    100126: Bone_qun_402
+    100128: Bone_shoulder_L
+    100130: Bone_shoulder_R
+    100132: chest
+    100134: //RootNode
+    100136: foot
+    100138: gauntlets
+    100140: helmet
+    100142: hurt
+    100144: L_shoulder
+    100146: L_waist
+    100148: L_weapon
+    100150: legs
+    100152: overhead
+    100154: R_shoulder
+    100156: R_waist
+    100158: R_weapon
+    100160: shield
+    400000: armor
+    400002: B_weapon01
+    400004: B_weapon02
+    400006: B_wing
+    400008: Bip001
+    400010: Bip001 Footsteps
+    400012: Bip001 Head
+    400014: Bip001 HeadNub
+    400016: Bip001 L Calf
+    400018: Bip001 L Clavicle
+    400020: Bip001 L Finger0
+    400022: Bip001 L Finger01
+    400024: Bip001 L Finger0Nub
+    400026: Bip001 L Finger1
+    400028: Bip001 L Finger11
+    400030: Bip001 L Finger1Nub
+    400032: Bip001 L Foot
+    400034: Bip001 L Forearm
+    400036: Bip001 L Hand
+    400038: Bip001 L Thigh
+    400040: Bip001 L Toe0
+    400042: Bip001 L Toe0Nub
+    400044: Bip001 L UpperArm
+    400046: Bip001 Neck
+    400048: Bip001 Pelvis
+    400050: Bip001 R Calf
+    400052: Bip001 R Clavicle
+    400054: Bip001 R Finger0
+    400056: Bip001 R Finger01
+    400058: Bip001 R Finger0Nub
+    400060: Bip001 R Finger1
+    400062: Bip001 R Finger11
+    400064: Bip001 R Finger1Nub
+    400066: Bip001 R Foot
+    400068: Bip001 R Forearm
+    400070: Bip001 R Hand
+    400072: Bip001 R Thigh
+    400074: Bip001 R Toe0
+    400076: Bip001 R Toe0Nub
+    400078: Bip001 R UpperArm
+    400080: Bip001 Spine
+    400082: Bip001 Spine1
+    400084: Bone_Chest_L
+    400086: Bone_Chest_R
+    400088: Bone_hair_01
+    400090: Bone_hair_02
+    400092: Bone_hair_03
+    400094: Bone_hair_04
+    400096: Bone_hair_05
+    400098: Bone_hair_06
+    400100: Bone_hair_07
+    400102: Bone_hair_08
+    400104: Bone_qun_100
+    400106: Bone_qun_101
+    400108: Bone_qun_102
+    400110: Bone_qun_200
+    400112: Bone_qun_201
+    400114: Bone_qun_202
+    400116: Bone_qun_300
+    400118: Bone_qun_301
+    400120: Bone_qun_302
+    400122: Bone_qun_400
+    400124: Bone_qun_401
+    400126: Bone_qun_402
+    400128: Bone_shoulder_L
+    400130: Bone_shoulder_R
+    400132: chest
+    400134: //RootNode
+    400136: foot
+    400138: gauntlets
+    400140: helmet
+    400142: hurt
+    400144: L_shoulder
+    400146: L_waist
+    400148: L_weapon
+    400150: legs
+    400152: overhead
+    400154: R_shoulder
+    400156: R_waist
+    400158: R_weapon
+    400160: shield
+    4300000: helmet
+    4300002: legs
+    4300004: gauntlets
+    4300006: armor
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: armor
+    13700002: gauntlets
+    13700004: helmet
+    13700006: legs
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
