@@ -1,6 +1,64 @@
 using System.Linq.Expressions.Interpreter;
 代码设定部分：
 
+    //ForwardRenderer.cs
+    public override void Setup(ScriptableRenderContext context, ref RenderingData renderingData)
+    {
+        Camera camera = renderingData.cameraData.camera;
+        ref CameraData cameraData = ref renderingData.CameraData;
+        RenderTextureDescriptor  cameraTargetDescriptor = renderingData.cameraData.cameraTargetDescriptor;
+
+        bool isOffScreenDepthTexture = cameraData.targetTexture == null 
+                                    && cameraData.targetTexture.format == RenderTextureFormat.Depth;
+        
+        if (isOffScreenDepthTexture)
+        {
+            ConfigureCameraTarget(BuiltinRenderTextureType.CameraTarget, BuiltinRenderTextureType.CameraTarget);
+            for (int i = 0; i < rendererFeatures.Count; i++)
+            {
+                if (rendererFeatures[i].isActive)
+                    rendererFeatures[i].AddRenderPasses(this, ref renderingData);
+            }
+            EnqueuePass(m_RenderOpaqueForwardPass);
+            EnqueuePass(m_DrawSkyboxPass);
+            EnqueuePass(m_RenderTransparentForwardPass);
+            return;
+        }
+
+        //相机是否支持屏幕后处理
+        bool applyPostProcessing = cameraData.postProcessEnabled;
+
+        bool anyPostProcessing = renderingData.postProcessingEnabled;
+        bool generateColorGradingLUT = anyPostProcessing && cameraData.renderType = CameraRenderType.Base;
+        #if POST_PROCESSING_STACK_2_0_0_OR_NEWER
+            if (postProcessFeatureSet == PostProcessingFeatureSet.PostProcessingV2)
+                generateColorGradingLUT = false;
+
+        #endif
+
+        //是否是 Editor模式下的Scene视图的相机
+        bool isScreenViewCamera = cameraData.isSceneViewCamera; 
+        bool requiresDepthTexture = cameraData.requiredDepthTexture;
+        bool isStereoEnable = cameraData.isStereoEnabled;
+
+        bool mainLightShadows = m_MainLightShadowsCasterPass.Setup(ref renderingData);
+        bool additionalLightShadows = m_AdditionalLightsShadowCasterPass.Setup(ref renderingData);
+        bool transparentsNeedSettingPass = m_TransparentSettingsPass.Setup(ref renderingData);
+
+        bool requiresDepthPrepass = isSceneViewCamera;
+        requiresDepthPrepass |= (requiresDepthTexture && !CanCopyDepth(ref renderingData.cameraData));
+
+        m_CopyDepthPass.renderPassEvent = (!requiresDepthTexture && (applyPostProcessing || isSceneViewCamera))? RenderPassEvent.AfterRenderingTransparents : RenderPassEvent.AfterRenderingOpaques;
+        
+
+
+
+
+
+    }
+
+
+    //初始化渲染需要的信息
     static void InitializeRenderingData(UniversalRenderPipelineAsset settings， ref CameraData cameraData, ref CullingResults cullResults, bool requiresBlitToBackbuffer, bool anyPostPreocessingEnabled, out RederingData renderingdata)
     {
         var visibleLights = cullResults.visibleLights;
@@ -39,7 +97,11 @@ using System.Linq.Expressions.Interpreter;
         renderingData.cameraData = cameraData;
 
         InitializeLightData(settings, visibleLights, mainLightIndex, out renderingData.lightData);
+        InitializeShhadowData(settings, visibleLights, mainLightCastShadows, additionalLightsCastShadows && !renderingData.lightData.shadeAdditionalLightsPerVertex, out renderingData.shadowData);
 
+        /**
+        未完待续
+        **/
     }
 
 
@@ -88,11 +150,94 @@ using System.Linq.Expressions.Interpreter;
 
         if (settings.additionalLightsRenderingMode != LightRenderingMode.Disabled) 
         {
-
+            //没有主光源所有的可见光都是 额外的光源，有主光源需要减去（废话） 和默认的最大值取较小的值
+            lightData.additionalLightsCount = Math.Min(
+                (mainLightIndex != -1)? visibleLightsLength - 1; visibleLights.Length,
+                maxVisibleAdditionalLights);
+            
+            lightData.maxPerObjectAdditionalLightsCount = Math.Min(settings.maxAdditionalLightsCount, maxPerObjectAdditionalLights);
+        }
+        else
+        {
+            lightData.additionalLightsCount = 0;
+            lightData.maxPerObjectAdditionalLightsCount = 0;
         }
 
-
+        lightData.shadeAdditionalLightsPerVertex = settings.additionalLightsRenderingMode == LightRenderingMode.PerVertex;
+        lightData.visibleLights = visibleLights;
+        lightData.supportsMixedLighting = settings.supportsMixedLighting;
     }
+
+    static void InitializeShadowData(UniversalRenderPipelineAsset settings, NativeArray<VisibleLight> visibleLights, bool mainLightCastShadows, bool additionalLightsCastShadows, out ShadowData shadowData)
+    {
+        m_ShadowBiasData.Clear();
+
+        for (int i = 0; i < visibleLights.Length; i++)
+        {
+            Light light = visibleLights[i].light;
+            UniversalAdditionalLigthData data = null;
+            if (light != null) 
+            {
+                #if UNITY_2019_3_OR_NEWER
+                    light.gameObject.TryGetComponent(out data);
+                #else
+                    data = light.gameObject.GetComponent<UniversalAdditionalLightData>();
+                #endif
+            }
+            if (data && !data.usePipelineSettings)
+                m_ShadowBiasData.Add(new Vector4(light.shadowBias, light.shadowNormalBias, 0.0f, 0.0f));
+            else
+                m_ShadowBiasData.Add(new Vector4(settings.shadowDepthBias, settings.ShadowNormalBias, 0.0f, 0.0f));
+        }
+
+        shadowData.bias = m_ShadowBiasData;
+        shadowData.supportsMainLightShadows = SystemInfo.supportsShadows 
+                                            && settings.supportsMainLightShadows 
+                                            && mainLightCastShadows;
+        shadowData.requiresScreenSpaceShadowResolve = false;
+
+        int shadowCascadesCount;
+        switch(settings.shadowCascadeOption)
+        {
+            case ShadowCascadesOption.FourCascades:
+                shadowCascadesCount = 4;
+                break;
+            case ShadiwCascadesOption.TwoCascades;
+                shadowCascadesCount = 2;
+                break;
+            default:
+                shadowCascadesCount = 1;
+                break;
+        }
+
+        shadowData.mainLightShadowCascadesCount = shadowCascadesCount;
+
+        shadowData.mainLightShadowmapWidth = settings.mainLightShadowmapResolution;
+        shadowData.mainLightShadowmapHeight= settings.mainLigthShadowmapResolution;
+
+        switch (shadowData.mainLightShadowCascadesCount)
+        {
+            case 1:
+                shadowData.mainLightShadowCascadesSplit = new Vector3(1.0f, 0.0f, 0.0f);
+                break;
+            case 2:
+                shadowData.mainLightShaowCascadesSplit = new Vector3(settings.cascade2Split, 1.0, 1.0);
+                break;
+            case 4:
+                shadowData.mainLightShadowCascadesSplit = settings.cascades4Split;
+                break;
+        }
+
+        shadowData.supportsAdditionalLightShadows = SysytemInfo.supportShadows 
+                                                && settings.supportsAdditionalLightShadows
+                                                && additionalLigthsCastShadows;
+        shadowData.additionalLightsShadowmapWidth = shadowData.additionalLightsShadowmapHeight = settings.additionalLightsShadowmapResolution;
+        shadowData.supportsSoftShadows = setting.supportsSoftShadows
+                                        && (shadowData.supportsMainLightShadows || shadowData.supportsAdditionalLigthShadows);
+
+        shadowData.shadowmapDepthBufferBits = 16;                             
+    }
+
 
 
 
