@@ -1,0 +1,9 @@
+菲涅尔反射：计算出光反射部分的比重
+    比如： 当视线垂直看向湖面时，反射的比重趋近于0
+           抬头看向远处的湖面，反射的比重趋近于1
+
+Schlick Fresnel：F = F0 + ( 1 - F0)(1 - vn)^5
+其中v是视线的方向，n是表面该点的法向量
+
+Shader Graph中的Fresnel节点生成的函数：pow(1.0 - saturate(dot(normalize(v), normalize(n))), 5);
+越是边缘计算出来的值越大，可以用来简单的生成边缘
