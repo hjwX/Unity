@@ -1,0 +1,41 @@
+Alpha混合:
+    假设有一张RenderTexture,RT上的像素我们称其为RGB(dst),alpha为A(dst).
+    现在有一个像素RGB(src),A(src)要和RT上的像素混合
+    正确的混合公式：
+    RGB(result) = A(src) * RGB(src) + A(dst) * RGB(dst) * (1 - A(src));
+    A(result) = A(src) + (1 - A(src)) * A(dst);
+
+    A(src) * RGB(src) 代表像素RGB(src)对最终颜色的贡献，它受alpha的影响，alpha为0则完全没有影响
+    alpha=1则贡献了100%
+    A(dst) * RGB(dst) 代表原像素原本没有其他像素覆盖时的颜色贡献，但是现在没有遮挡了A(src),所以最终的
+    贡献值为A(dst) * RGB(dst) * (1 - A(src))
+
+    由上我们可以看出，无论是src还是dst，A*RGB才是实际有效的颜色，被称为premultiplied alpha。
+    令RGB` = RGB * A
+    RGB(result) = RGB`(src) + RGB`(dst) * (1 - A(src));
+    最终的输出 = 叠加颜色的有效部分 + RT中原像素的有效部分 * (1 - 被遮挡)
+
+unity中透明物体默认的blend模式是 SrcAlpha, OneMinusSrcAlpha
+即：RGB(result) = A(src) * RGB(src) + (1 - A(src)) * RGB(dst);
+对比上面的公式可以知道，这个公式默认RGB(dst)的Alpha是1，即A(dst) = 1
+在unity中时先渲染不透明物体再渲染不透明的天空盒，最后渲染透明的物体，在这样的前提下上面的混合是正确的
+但是在不透明的物体混合到半透明的物体上时这个公式就是不正确的了
+当默认设置为： Blend SrcAlpha OneMinusSrcAlpha
+透明通道Alpha计算和RGB计算是一样的 A(result) = A(src) * A(src) + (1 - A(src)) * A(dst);
+显然这样计算出来的Alpha值时没有任何意义的
+Blend SrcAlpha OneMinusAlpha One OneMinusSrcAlpha
+这样设置用后两位来设置透明值混合时的参数
+
+在TextureFiltering和Mipmap上时，考虑一个UV坐标落在了两个纹素的中间，这两个纹素分别为(1,0,0,1)和
+(0,1,0,0)若采用双线性的过滤得到的结果就是(0.5,0.5,0,0.5)
+显然得到的结果是不正确的，一个完全透明和一个完全不透明对最终纹素的贡献是一样的，这显然是不符合直觉的
+如果我们在采样或插值之前预乘Alpha得到的结果就是(0.5, 0, 0, 0.5)显然这是符合直觉的
+在实际的情况下，一张图片的透明区域是透明的黑即(0,0,0,0).这个时候如果图片有mipMap或者FilterMode不为Nearest
+那么在不透明和透明区域的边缘会出现黑边，产生这样的原因就是透明的黑色纹素和不透明纹素对纹理采样结果做出了同样的贡献
+预乘Alpha可以解决这个问题。
+在unity中图片的默认格式还是RGBA并没有预乘Alpha这样的格式。在Texture Inspector面板上有Alpha Is Transparency
+选项。勾选了可以避免黑边的出现，它的原理并不是预乘Alpha，而是将不透明区域的颜色扩张到透明区域，把透明区域的RGB值设置
+为临近不透明像素的RGB值，这样边缘的过滤就不是和透明的黑色做混合了这样就可以避免黑边的产生。
+所以在unity中对于Alpha表示的是透明度的图片，需要勾线Alpha Is Transparency
+
+
