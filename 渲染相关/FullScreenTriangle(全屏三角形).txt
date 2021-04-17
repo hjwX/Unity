@@ -1,0 +1,43 @@
+全屏三角形，绘制一个三角形来覆盖全屏
+屏幕是一个四边形，按照通常的方法需要两个三角形来拼接成一个quad
+我们可以通过只绘制一个覆盖了屏幕的三角形来替代这两个三角形，提高一点效率
+
+我们要覆盖住全屏，三角形的各个顶点分别为
+(-1, -1, UNITY_NEAR_CLIP_VALUE, 1),(-1, 3, UNITY_NEAR_CLIP_VALUE, 1),(3, -1, UNITY_NEAR_CLIP_VALUE, 1)
+这个三个坐标都是在NDC坐标下的。
+UNITY_NEAR_CLIP_VALUE是unity的shaderLib定义的宏在各个平台上的值是不一样的
+因为有些平台会翻转Z(可以通过UNITY_REVERSED_Z宏知道是否翻转了)导致近截面的Z坐标不一样
+反正使用UNITY_NEAR_CLIP_VALUE就对了
+
+然后对应的UV坐标：
+(0, 0), (0, 2), (2, 0)
+这样经过线性插值的话,屏幕的UV坐标就是正确的坐标
+
+我们这样构造Mesh
+
+Mesh fullScreenTriangleMesh = new Mesh();
+List<Vector3> vertices = new List<Vector3>():
+vertices.add(new Vector3(-1, -1, 0));
+vertices.add(new Vector3(-1, 3, 0));
+vertices.add(new Vector3(3, -1, 0));
+fullScreenTriangleMesh.SetVertices(vertices);
+int[] indices = {0,1,2};
+fullScreenTriangleMesh.SetIndices(indices, MeshTopoLogy.Triangles, 0, false);
+fullScreenTriangleMesh.UploadMeshData(false);
+return fullScreenTriangleMesh;
+
+//shader
+//shader中要设置成Cull Off，要不然三角形会不见了 暂时还不知道原因
+//个人猜测，在测试中其实只要设置成CUll Front就可以了看见了
+//其实三个点的坐标空间是在view空间的但是view空间是右手坐标系和unity的左手坐标系顺时针的方向是相反
+//所以在Cull Back的时候是看不见绘制的三角形的
+v2f vert(appdata v)
+{
+    v2f o;
+    o.pos = float4(v.position.xy, UNITY_NEAR_CLIP_VALUE, 1.0);
+    o.uv = (v.position.xy + 1) * 0.5;
+    if (_ProjectionParams.x < 0)
+        o.uv = o.uv * float2(1, -1) + float2(0, 1);
+    return o;
+}
+像素处理器只需要按UV采样就好了
