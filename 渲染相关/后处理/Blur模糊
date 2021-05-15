@@ -1,0 +1,21 @@
+1.高斯模糊：
+    主要思想用Gaussian Kernel对图像进行处理
+    将7X7的Gaussian kernel 线性分解成Horizontal 7 和 Vertical 7的两个Pass
+    实现方面，可以采用经过线性分解的高斯核的方案，且用乒乓RenderTexture交互blit的方法。高斯模糊对应的Fragment Shader的实现为：
+    float4 FragGaussianBlur(v2f i): SV_Target
+    {
+        half4 color = float4(0, 0, 0, 0);
+    
+        color += 0.40 * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
+        color += 0.15 * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv01.xy);
+        color += 0.15 * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv01.zw);
+        color += 0.10 * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv23.xy);
+        color += 0.10 * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv23.zw);
+        color += 0.05 * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv45.xy);
+        color += 0.05 * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv45.zw);
+    
+        return color;
+    }
+    为了RenderTexture的大小可以对原图像，降采样再进行模糊，再将模糊后的图像升采样得到最后的图像
+    
+

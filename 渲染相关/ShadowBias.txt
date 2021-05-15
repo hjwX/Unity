@@ -1,0 +1,25 @@
+详细可以参考这篇文章https://learnopengl-cn.readthedocs.io/zh/latest/05%20Advanced%20Lighting/03%20Shadows/01%20Shadow%20Mapping/
+
+ShadowBias(阴影偏移)
+由于在Light的view视角渲染物体的深度图的时候，渲染的RenderTexture的分辨率是有限的，导致可能Light的view视角下的一个像素点对应在Camera的view视角下的好几个像素点
+在Light的view视角假设得到的深度的大小为0.5，但在Camera的view视角下4个像素点共用了这个像素点的深度值0.5，但是这4个点求出来的深度值并不是都是0.5有些大于0.5有些小于0.5所以导致了阴影失真的情况
+简单的处理方法就是在比较的时候将ClosestDepth加上一个偏移，这样在比较的时候所有的表面的深度值都是偏小的，表面可以都被照亮。
+可以根据 dot(normal, lightDir)在动态修改bias的值，显然当dot(normal, lightDir) == 0的时候bias应该大一些
+                                                    dot(normal, lightDir) == 1 的时候bias应该小一些
+
+Unity的实现并不是在最终比较的时候再去加一个具体的偏移值，而是在计算阴影深度图的时候将点的位置做一点的偏移使得该点的深度值相对于真实的深度值是偏大的，其实和上面的原理是一样的
+
+URP中的实现
+//lightDirection是光源的方向
+//看源码可知 _ShadowBias中的值都是负数
+ApplyShadowBias(vector3 positionWS, vector3 normalWS, vector3 lightDirection)
+{
+    float invNdotL = 1 - saturate(dot(normalWS, lightDirection));
+    float scale = invNdotL * _ShadowBias.y;
+    
+    //向光源的反方向移动点，求出来的深度值会更大一点
+    positionWS = positionWS + lightDirection * _ShadowBias.xxx;
+    //向点的法方向的反方向移动点
+    positionWS = positionWS + scale.xxx * normalWS;
+    return positionWS;
+}
