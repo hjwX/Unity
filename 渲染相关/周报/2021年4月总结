@@ -1,0 +1,2 @@
+这个月还是主要在渲染方面，阴影部分Planar Shadows和ScreenSpaceShadows,屏幕后处理方面Blur,Bloom。其他一些可以有帮助的东西，shaderGUI可以帮我们定制Material的inspector界面和管理一些KeyWord,全屏三角形来绘制屏幕，乒乓来减少RenderTexture等。狩猎完成了手上的功能，调整UI的部分看了一些UI方面的东西，界面3D物体的显示，UI合并减少draw的问题，Mask和RectMask2D等。最后看了一下给的demo，NavMeshComponents和场景的动态加载。
+    下个月要开始安排怎么动手做我们自己的demo

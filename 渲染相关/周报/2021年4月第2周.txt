@@ -1,0 +1,4 @@
+        这周，之前做的功能都出了UI图花了一点时间去处理UI的位置和动画相关的东西。遇到一个按钮点击没有反应的问题，明明勾选了Raycast Target，之后发现是策划为了重用一张图，把一张图绕
+    y旋转了180才导致了点击事件失效了，Canvas的Ignore Reversed Graphics被勾线了所以背对屏幕的图像时不会接受射线检测的但是默认的UIShader是CUllOff的所以还是可以显示，解决办法把旋转改为scale.x = -1就好了。渲染方面，继续看屏幕空间阴影部分，自己做了一个简单的实现，出来的阴影效果不是很好。看了一下狩猎的阴影实现，狩猎是在主相机渲染前用两个LightCamera来渲染可见区域的在Light空间的
+    深度图，主相机在渲染完Opaque之后用之前的生成的light深度图来生成计算阴影。然后看了一部分ShaderGUI，可以用来自定义Material的inspector界面，可以根据Material的属性来动态设置Shader中的keyWord，对于有很多Keyword的shader来说很方便。中间有些基础的知识，像fullScreenTriangle和Alpha premultiple补全一些基础知识，要不然有些东西有的时候看的不是很明白。
+        下周，看一下阴影渲染的细节，一些参数的调整，有时间的把Bloom和Blur一些常用的后处理方法看一下

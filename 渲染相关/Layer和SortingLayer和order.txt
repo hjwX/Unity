@@ -1,8 +1,7 @@
 layer是对游戏中所有的物体做类别划分，把物体分到不同的层，方便相机选择要渲染那层的物体
 也可以用于射线的检测
-数值越大越晚渲染
 
-sorting layer:是同一个Layer中的层次划分，只有sprite和canvas拥有这个字段
+sortinglayer:是同一个Layer中的层次划分，只有sprite和canvas拥有这个字段
 数值越大越晚渲染
 
 order in Layer:是同一个sorting layer中的细分
