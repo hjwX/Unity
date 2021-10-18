@@ -6,7 +6,7 @@ PointToLineDistance:
   用点积来计算
     calByDot: vector3 op = p - o;
               float proj = Vector3.Dot(op, dir);
-              vector3 oe = o + dir * proj;
+              vector3 oe = dir * proj;
               vector3 pe = oe - op;
               return pe.magnitude;
     calByCross: vector3 op = p - o;
