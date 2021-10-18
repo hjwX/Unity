@@ -1,1 +1,5 @@
+现在计算都默认是在unity的左手坐标系中
 
+point ： vector3
+
+line: o(vector3) a point in line, dir(vector3) line direction
