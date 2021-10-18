@@ -1,2 +1,12 @@
 PointToLineDistance:
 
+求直线line外的一点p到直线的距离：
+  line:o(线上的任意一点), dir(单位向量)
+  p:p
+  用点积来计算
+    calByDot: vector3 op = p - o;
+              float proj = Vector3.Dot(op, dir);
+              vector3 oe = o + dir * proj;
+              vector3 pe = oe - op;
+              return pe.magnitude;
+
