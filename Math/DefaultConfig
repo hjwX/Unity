@@ -9,3 +9,6 @@ Vector.Cross(vec1, vec2)的计算结果cross
 point ： vector3
 
 line: o(vector3) a point in line, dir(vector3) line direction
+     
+plane: o(vector3) a point in plane, n(vector3) normal
+      面可以简单理解为投影到法向量上的距离相同的点的集合
