@@ -1,4 +1,4 @@
-现在计算都默认是在unity的左手坐标系中
+计算都默认是在unity的左手坐标系中
 
 point ： vector3
 
