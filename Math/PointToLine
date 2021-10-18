@@ -9,4 +9,6 @@ PointToLineDistance:
               vector3 oe = o + dir * proj;
               vector3 pe = oe - op;
               return pe.magnitude;
-
+    calByCross: vector3 op = p - o;
+                vector3 cross = Vector3.cross(op, dir);
+                return cross.magnitude;
