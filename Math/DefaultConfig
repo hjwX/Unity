@@ -1,5 +1,11 @@
 计算都默认是在unity的左手坐标系中
 
+Vector.Dot(vec1, vec2) = |vec1|*|vec2|*cosα   (α是vec1和vec2的夹角)
+Vector.Cross(vec1, vec2)的计算结果cross
+  cross 是一个向量 方向根据左右手定则(unity默认是左手)
+  cross 同时垂直于vec1和vec2
+  |cross| = |vec1| * |vec2| * sinα      (α是vec1和vec2的夹角)
+
 point ： vector3
 
 line: o(vector3) a point in line, dir(vector3) line direction
